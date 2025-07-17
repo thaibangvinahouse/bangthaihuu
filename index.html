@@ -6,7 +6,8 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #121212;
+      background: url('https://i.ibb.co/ZK6s1kr/bg-casino.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
@@ -60,6 +61,66 @@
       font-weight: bold;
       color: #0f0;
     }
+    .game-area {
+      text-align: center;
+    }
+    .game-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    .card {
+      width: 220px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid gold;
+      border-radius: 12px;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px gold;
+    }
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .card h3 {
+      font-size: 18px;
+      color: #FFD700;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: #00ffff;
+    }
+    .footer-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(45deg, #FFA500, #FF4500);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      background: linear-gradient(45deg, #FF6347, #FF8C00);
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
@@ -74,9 +135,35 @@
   </div>
 
   <div class="main">
-    <div id="homeSection">
+    <div id="homeSection" class="game-area">
       <h2>Chào mừng đến với Hoàng Phát Bank</h2>
-      <p>Vui lòng đăng nhập hoặc đăng ký để tiếp tục.</p>
+      <div class="game-row">
+        <div class="card">
+          <img src="https://i.ibb.co/QQZzkCX/taixiu.png" alt="Tài Xỉu MD5">
+          <h3>Tài Xỉu MD5</h3>
+          <p>$466,272,570</p>
+        </div>
+        <div class="card">
+          <img src="https://i.ibb.co/sb5bWkF/banca.png" alt="Bắn Cá">
+          <h3>Bắn Cá</h3>
+          <p>$128,517</p>
+        </div>
+        <div class="card">
+          <img src="https://i.ibb.co/GWHnMsF/aviator.png" alt="Aviator">
+          <h3>Aviator</h3>
+          <p>NEW</p>
+        </div>
+        <div class="card">
+          <img src="https://i.ibb.co/G3nbvmH/dragon.png" alt="Kho Báu Tứ Linh">
+          <h3>Kho Báu Tứ Linh</h3>
+          <p>$2,570,201,600</p>
+        </div>
+      </div>
+      <div class="footer-buttons">
+        <button class="btn">Nạp Tiền</button>
+        <button class="btn">Hỗ Trợ</button>
+        <button class="btn">Mini Game</button>
+      </div>
     </div>
 
     <div id="loginSection" class="hidden">
