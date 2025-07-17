@@ -7,104 +7,99 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #101010;
+      background-color: #0d0d0d;
       color: #fff;
       display: flex;
       height: 100vh;
     }
     .sidebar {
-      width: 220px;
-      background-color: #161616;
+      width: 230px;
+      background-color: #111;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
     .logo {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
-      color: #FFD700;
+      color: #FFA500;
       text-align: center;
+      margin-bottom: 20px;
     }
     .menu {
       list-style: none;
+      padding-left: 0;
     }
     .menu li {
       padding: 10px;
       color: #ccc;
       cursor: pointer;
-      border-radius: 6px;
+      transition: 0.3s;
     }
     .menu li:hover {
-      background-color: #FFD700;
+      background-color: #FFA500;
       color: #000;
+      border-radius: 4px;
     }
     .user-display {
-      font-size: 14px;
-      color: #bbb;
-      text-align: center;
+      color: lime;
+      font-weight: bold;
+      margin-bottom: 20px;
     }
     .main {
       flex: 1;
-      background-color: #121212;
       padding: 20px;
-      overflow-y: auto;
+      background-color: #1a1a1a;
     }
     .tab-bar {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 20px;
     }
-    .tab-bar div {
+    .tab-bar button {
       background-color: #222;
-      padding: 8px 12px;
-      border-radius: 4px;
+      color: #ccc;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
       cursor: pointer;
-      color: #ddd;
     }
-    .tab-bar div:hover {
-      background-color: #FFD700;
+    .tab-bar button:hover {
+      background-color: #FFA500;
       color: #000;
     }
-    .game-section {
-      display: flex;
-      gap: 20px;
-    }
-    .cltx-board, .bank-info {
-      flex: 1;
-      background-color: #1d1d1d;
+    .game-area {
+      background-color: #151515;
+      padding: 20px;
       border-radius: 10px;
-      padding: 15px;
     }
-    .cltx-board h3, .bank-info h3 {
-      margin-bottom: 10px;
+    .game-title {
+      font-weight: bold;
+      font-size: 18px;
       color: #FFD700;
+      margin-bottom: 15px;
     }
-    .cltx-buttons {
+    .game-buttons {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
-    .cltx-buttons button {
-      padding: 12px;
-      font-size: 16px;
+    .game-buttons button {
       background-color: #2a2a2a;
       color: #fff;
-      border: 1px solid #444;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-    .cltx-buttons button:hover {
-      background-color: #FFD700;
+    .game-buttons button:hover {
+      background-color: #FFA500;
       color: #000;
     }
-    .bank-info p {
-      margin: 6px 0;
-      font-size: 14px;
-    }
+    .section { display: none; }
+    .section.active { display: block; }
     .form-container {
       max-width: 400px;
-      margin: 30px auto;
+      margin: 0 auto;
       background-color: #1d1d1d;
       padding: 20px;
       border-radius: 10px;
@@ -121,52 +116,41 @@
       color: #fff;
     }
     .form-container button {
-      background-color: #FFD700;
+      background-color: #FFA500;
       color: #000;
       font-weight: bold;
       cursor: pointer;
     }
-    .section { display: none; }
-    .section.active { display: block; }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <div class="logo">🏦 Hoàng Phát Bank</div>
+    <div class="logo">Hoàng Phát Bank</div>
     <div id="userDisplay" class="user-display">Chưa đăng nhập</div>
     <ul class="menu">
-      <li onclick="showSection('home')">🏠 Trang chủ</li>
-      <li onclick="showSection('login')">🔐 Đăng nhập</li>
-      <li onclick="showSection('register')">📝 Đăng ký</li>
+      <li onclick="showSection('home')">Trang chủ</li>
+      <li onclick="showSection('login')">Đăng nhập</li>
+      <li onclick="showSection('register')">Đăng ký</li>
     </ul>
   </div>
+
   <div class="main">
     <div class="tab-bar">
-      <div>CLTX</div>
-      <div>CLTX2</div>
-      <div>1 Phần 3</div>
-      <div>Tài Xỉu MD5</div>
-      <div>Mini Game</div>
+      <button onclick="alert('CLTX đã chọn')">CLTX</button>
+      <button onclick="alert('CLTX2 đã chọn')">CLTX2</button>
+      <button onclick="alert('Chưa tạo')">1 Phần 3</button>
+      <button onclick="alert('Chưa tạo')">Tài Xỉu MD5</button>
+      <button onclick="alert('Mini Game')">Mini Game</button>
     </div>
 
     <div id="home" class="section active">
-      <div class="game-section">
-        <div class="cltx-board">
-          <h3>🎲 Chẵn Lẻ - Tài Xỉu</h3>
-          <div class="cltx-buttons">
-            <button>Chẵn</button>
-            <button>Lẻ</button>
-            <button>Tài</button>
-            <button>Xỉu</button>
-          </div>
-        </div>
-        <div class="bank-info">
-          <h3>🏧 Thông tin Bank nhận</h3>
-          <p>Ngân hàng: MB Bank</p>
-          <p>Chủ tài khoản: NGUYEN VAN A</p>
-          <p>Số tài khoản: 0123456789</p>
-          <p>Cược tối thiểu: 10.000đ</p>
-          <p>Cược tối đa: 5.000.000đ</p>
+      <div class="game-area">
+        <div class="game-title">🎲 Chẵn Lẻ - Tài Xỉu</div>
+        <div class="game-buttons">
+          <button>Chẵn</button>
+          <button>Lẻ</button>
+          <button>Tài</button>
+          <button>Xỉu</button>
         </div>
       </div>
     </div>
