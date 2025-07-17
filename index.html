@@ -2,112 +2,146 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Xóc88 - Giao Diện Web</title>
+  <title>Hoàng Phát Bank</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
     body {
-      background: url('https://i.ibb.co/ZK6s1kr/bg-casino.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: #111;
+      color: #fff;
       font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-    }
-    .container {
-      max-width: 1300px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    .game-row {
       display: flex;
-      flex-wrap: wrap;
+    }
+    aside {
+      width: 250px;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+    aside h1 {
+      color: #ff8000;
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+    aside ul {
+      list-style: none;
+    }
+    aside ul li {
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #ccc;
+    }
+    aside ul li::before {
+      content: '📌 ';
+      color: #ff8000;
+    }
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+    .header-nav {
+      display: flex;
       gap: 20px;
-      justify-content: center;
-      margin-bottom: 50px;
-    }
-    .card {
-      width: 220px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid gold;
-      border-radius: 12px;
-      text-align: center;
-      padding: 15px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px gold;
-    }
-    .card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .card h3 {
-      font-size: 18px;
-      color: #FFD700;
-      margin-bottom: 8px;
-    }
-    .card p {
-      font-size: 14px;
-      color: #00ffff;
-    }
-    .footer-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
     }
-    .btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background: linear-gradient(45deg, #FFA500, #FF4500);
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
+    .header-nav a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
     }
-    .btn:hover {
-      background: linear-gradient(45deg, #FF6347, #FF8C00);
-      transform: scale(1.05);
+    .header-nav a:hover {
+      color: #ff8000;
+    }
+    .games, .bank {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #333;
+      text-align: center;
+    }
+    th {
+      color: #ff8000;
+    }
+    .highlight {
+      color: #ff8000;
+      font-weight: bold;
+    }
+    .chat {
+      background: #ff8000;
+      padding: 12px 16px;
+      color: #fff;
+      border-radius: 10px;
+      display: inline-block;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="game-row">
-      <div class="card" onclick="/* dán code tài xỉu ở đây */">
-        <img src="https://i.ibb.co/QQZzkCX/taixiu.png" alt="Tài Xỉu MD5">
-        <h3>Tài Xỉu MD5</h3>
-        <p>$466,272,570</p>
-      </div>
-      <div class="card" onclick="/* dán code bắn cá ở đây */">
-        <img src="https://i.ibb.co/sb5bWkF/banca.png" alt="Bắn Cá">
-        <h3>Bắn Cá</h3>
-        <p>$128,517</p>
-      </div>
-      <div class="card" onclick="/* dán code Aviator ở đây */">
-        <img src="https://i.ibb.co/GWHnMsF/aviator.png" alt="Aviator">
-        <h3>Aviator</h3>
-        <p>NEW</p>
-      </div>
-      <div class="card" onclick="/* dán code kho báu tứ linh ở đây */">
-        <img src="https://i.ibb.co/G3nbvmH/dragon.png" alt="Kho Báu Tứ Linh">
-        <h3>Kho Báu Tứ Linh</h3>
-        <p>$2,570,201,600</p>
-      </div>
+  <aside>
+    <h1>HOÀNG PHÁT BANK</h1>
+    <ul>
+      <li>Trang chủ</li>
+      <li>Đăng nhập</li>
+      <li>Đăng ký</li>
+      <li>Giftcode</li>
+      <li>Nhiệm vụ ngày</li>
+      <li>Nổ hũ</li>
+      <li>Ưu đãi VIP</li>
+      <li>Fan miễn phí 200K</li>
+      <li>Đại lý Hoàng Phát</li>
+      <li>Cài đặt</li>
+    </ul>
+  </aside>
+
+  <div class="main">
+    <div class="header-nav">
+      <a href="#">CLTX</a>
+      <a href="#">CLTX2</a>
+      <a href="#">1 PHẦN 3</a>
+      <a href="#">TỔNG 3 SỐ</a>
+      <a href="#">XIÊN</a>
+      <a href="#">GẤP 3</a>
+      <a href="#">RÚT TIỀN</a>
+      <a href="#">NẠP TIỀN</a>
+      <a href="#">SICBO</a>
+      <a href="#">TÀI XẮ MD5</a>
     </div>
 
-    <div class="footer-buttons">
-      <button class="btn" onclick="/* dán code nạp tiền */">Nạp Tiền</button>
-      <button class="btn" onclick="/* dán code hỗ trợ */">Hỗ Trợ</button>
-      <button class="btn" onclick="/* dán code mini game */">Mini Game</button>
+    <div class="games">
+      <h2>🎲 Chẳn lẻ - Tài xỉu</h2>
+      <table>
+        <tr><th>Trò chơi</th><th>Đuôi tiền</th><th>1 số cuối</th><th>Tỷ lệ</th></tr>
+        <tr><td>Chẳn</td><td>00</td><td>2 4 6 8</td><td>x2.7</td></tr>
+        <tr><td>Lẻ</td><td>01</td><td>1 3 5 7</td><td>x2.7</td></tr>
+        <tr><td>Tài</td><td>02</td><td>5 6 7 8</td><td>x2.7</td></tr>
+        <tr><td>Xỉu</td><td>03</td><td>1 2 3 4</td><td>x2.7</td></tr>
+      </table>
+    </div>
+
+    <div class="bank">
+      <h2>🏦 Thông tin bank nhận</h2>
+      <table>
+        <tr><th>Ngân hàng nhận</th><th>Tài khoản</th><th>Cuớc min</th><th>Cuớc max</th><th>Mã QR</th></tr>
+        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
+        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
+        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
+      </table>
+      <div class="chat">💬 CHAT NGAY VỚI CSKH</div>
     </div>
   </div>
 </body>
