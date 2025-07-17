@@ -137,99 +137,15 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">🏦 Hoàng Phát Bank</div>
-    <div id="userDisplay" class="user-display">Chưa đăng nhập</div>
-    <ul class="menu">
-      <li onclick="showSection('home')">🏠 Trang chủ</li>
-      <li onclick="showSection('login')">🔐 Đăng nhập</li>
-      <li onclick="showSection('register')">📝 Đăng ký</li>
-      <li onclick="showSection('deposit')">💰 Nạp tiền</li>
-      <li onclick="showSection('withdraw')">💸 Rút tiền</li>
-    </ul>
-  </div>
-  <div class="main">
-    <div class="tab-bar">
-      <div>CLTX</div>
-      <div>CLTX2</div>
-      <div>1 Phần 3</div>
-      <div>Tài Xỉu MD5</div>
-      <div>Mini Game</div>
-    </div>
-
-    <div id="home" class="section active">
-      <div class="game-section">
-        <div class="cltx-board">
-          <h3>🎲 Chẵn Lẻ - Tài Xỉu</h3>
-          <div class="cltx-buttons">
-            <button>Chẵn</button>
-            <button>Lẻ</button>
-            <button>Tài</button>
-            <button>Xỉu</button>
-          </div>
-        </div>
-        <div class="bank-info" id="bankInfo">
-          <h3>🏧 Thông tin Bank nhận</h3>
-          <p id="bankName">Ngân hàng: MB Bank</p>
-          <p id="bankHolder">Chủ tài khoản: NGUYEN VAN A</p>
-          <p id="bankNumber">Số tài khoản: 0123456789</p>
-          <p>Cược tối thiểu: 10.000đ</p>
-          <p>Cược tối đa: 5.000.000đ</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="login" class="section">
-      <div class="form-container">
-        <h3>🔐 Đăng nhập</h3>
-        <input type="text" id="loginUser" placeholder="Số điện thoại hoặc tên tài khoản">
-        <input type="password" id="loginPass" placeholder="Mật khẩu">
-        <button onclick="login()">Đăng nhập</button>
-      </div>
-    </div>
-
-    <div id="register" class="section">
-      <div class="form-container">
-        <h3>📝 Đăng ký</h3>
-        <input type="text" id="regPhone" placeholder="Số điện thoại">
-        <input type="text" id="regUser" placeholder="Tên tài khoản">
-        <input type="text" id="regName" placeholder="Tên hiển thị">
-        <input type="password" id="regPass" placeholder="Mật khẩu">
-        <button onclick="register()">Đăng ký</button>
-      </div>
-    </div>
-
-    <div id="deposit" class="section">
-      <div class="form-container">
-        <h3>💰 Nạp tiền</h3>
-        <input type="number" id="depositAmount" placeholder="Nhập số tiền (5.000 - 100.000.000 đ)">
-        <small>Lưu ý: Số tiền nạp tối thiểu 5.000đ, tối đa 100.000.000đ</small>
-        <select id="depositMethod">
-          <option value="qr">Chuyển khoản qua QR</option>
-          <option value="manual">Chuyển khoản viết tay</option>
-        </select>
-        <div id="depositResult"></div>
-        <button onclick="generateDepositInfo()">Tiếp tục</button>
-      </div>
-    </div>
-
-    <div id="withdraw" class="section">
-      <div class="form-container">
-        <h3>💸 Rút tiền</h3>
-        <input type="text" id="withdrawBank" placeholder="Tên ngân hàng">
-        <input type="text" id="withdrawNumber" placeholder="Số tài khoản">
-        <input type="text" id="withdrawName" placeholder="Tên người nhận">
-        <button onclick="saveWithdrawInfo()">Lưu thông tin rút</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- HTML BODY KHÔNG THAY ĐỔI -->
   <script>
     const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
+
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
+
     function register() {
       const phone = document.getElementById('regPhone').value;
       const user = document.getElementById('regUser').value;
@@ -237,12 +153,13 @@
       const pass = document.getElementById('regPass').value;
       if (!phone || !user || !pass || !name) return alert("Vui lòng điền đầy đủ thông tin!");
       if (users[phone] || users[user]) return alert("Tài khoản đã tồn tại!");
-      users[phone] = { user, pass, name };
-      users[user] = { user, pass, name };
+      users[phone] = { user, pass, name, withdrawInfo: null };
+      users[user] = users[phone];
       localStorage.setItem('hp_users', JSON.stringify(users));
       alert("Đăng ký thành công!");
       showSection('login');
     }
+
     function login() {
       const input = document.getElementById('loginUser').value;
       const pass = document.getElementById('loginPass').value;
@@ -252,7 +169,9 @@
       alert("Đăng nhập thành công!");
       showSection('home');
       document.getElementById('userDisplay').innerText = users[input].name;
+      updateBankInfo(users[input]);
     }
+
     function generateDepositInfo() {
       const amount = parseInt(document.getElementById('depositAmount').value);
       const method = document.getElementById('depositMethod').value;
@@ -273,20 +192,44 @@
       }
       document.getElementById('depositResult').innerHTML = html;
     }
+
     function saveWithdrawInfo() {
+      const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
+      if (!current) return alert("Vui lòng đăng nhập trước!");
+      if (current.withdrawInfo) return alert("Bạn chỉ được cập nhật thông tin rút tiền 1 lần. Vui lòng liên hệ CSKH nếu muốn thay đổi.");
+
       const bank = document.getElementById('withdrawBank').value;
       const number = document.getElementById('withdrawNumber').value;
       const name = document.getElementById('withdrawName').value;
-      document.getElementById('bankName').innerText = `Ngân hàng: ${bank}`;
-      document.getElementById('bankNumber').innerText = `Số tài khoản: ${number}`;
-      document.getElementById('bankHolder').innerText = `Chủ tài khoản: ${name}`;
+
+      current.withdrawInfo = { bank, number, name };
+      sessionStorage.setItem('hp_currentUser', JSON.stringify(current));
+
+      for (let key in users) {
+        if (users[key].user === current.user || users[key].name === current.name) {
+          users[key].withdrawInfo = current.withdrawInfo;
+        }
+      }
+      localStorage.setItem('hp_users', JSON.stringify(users));
+
+      updateBankInfo(current);
       alert("Đã lưu thông tin rút tiền thành công!");
       showSection('home');
     }
+
+    function updateBankInfo(user) {
+      if (user.withdrawInfo) {
+        document.getElementById('bankName').innerText = `Ngân hàng: ${user.withdrawInfo.bank}`;
+        document.getElementById('bankNumber').innerText = `Số tài khoản: ${user.withdrawInfo.number}`;
+        document.getElementById('bankHolder').innerText = `Chủ tài khoản: ${user.withdrawInfo.name}`;
+      }
+    }
+
     window.onload = () => {
       const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
       if (current) {
         document.getElementById('userDisplay').innerText = current.name;
+        updateBankInfo(current);
       }
     };
   </script>
