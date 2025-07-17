@@ -44,45 +44,103 @@
       color: #bbb;
       text-align: center;
     }
-    .balance-display {
-      font-size: 16px;
-      font-weight: bold;
-      color: #FFD700;
-      text-align: center;
-      margin-top: 10px;
-    }
     .main {
       flex: 1;
       background-color: #121212;
       padding: 20px;
       overflow-y: auto;
     }
-    .section { display: none; }
-    .section.active { display: block; }
-    .admin-panel {
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .tab-bar div {
+      background-color: #222;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #ddd;
+    }
+    .tab-bar div:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+    .game-section {
+      display: flex;
+      gap: 20px;
+    }
+    .cltx-board, .bank-info {
+      flex: 1;
+      background-color: #1d1d1d;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .cltx-board h3, .bank-info h3 {
+      margin-bottom: 10px;
+      color: #FFD700;
+    }
+    .cltx-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .cltx-buttons button {
+      padding: 12px;
+      font-size: 16px;
+      background-color: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .cltx-buttons button:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+    .bank-info p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 30px auto;
       background-color: #1d1d1d;
       padding: 20px;
       border-radius: 10px;
     }
-    .admin-user {
-      background-color: #2a2a2a;
+    .form-container input, .form-container select, .form-container button {
+      width: 100%;
       padding: 10px;
-      margin: 5px 0;
+      margin: 10px 0;
+      border: none;
       border-radius: 5px;
+    }
+    .form-container input, .form-container select {
+      background-color: #333;
+      color: #fff;
+    }
+    .form-container button {
+      background-color: #FFD700;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
     }
-    .admin-actions button {
-      margin-right: 10px;
-      margin-top: 5px;
+    .form-container small {
+      color: #ccc;
+      display: block;
+      margin-top: -5px;
+      margin-bottom: 10px;
     }
+    .section { display: none; }
+    .section.active { display: block; }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <div class="logo">🏦 Hoàng Phát Bank</div>
     <div id="userDisplay" class="user-display">Chưa đăng nhập</div>
-    <div id="balanceDisplay" class="balance-display"></div>
-    <ul class="menu" id="menuList">
+    <ul class="menu">
       <li onclick="showSection('home')">🏠 Trang chủ</li>
       <li onclick="showSection('login')">🔐 Đăng nhập</li>
       <li onclick="showSection('register')">📝 Đăng ký</li>
@@ -91,105 +149,151 @@
     </ul>
   </div>
   <div class="main">
-    <div id="adminPanel" class="section">
-      <h2>👑 Quản trị viên</h2>
-      <div id="userList" class="admin-panel"></div>
+    <div class="tab-bar">
+      <div>CLTX</div>
+      <div>CLTX2</div>
+      <div>1 Phần 3</div>
+      <div>Tài Xỉu MD5</div>
+      <div>Mini Game</div>
+    </div>
+
+    <div id="home" class="section active">
+      <div class="game-section">
+        <div class="cltx-board">
+          <h3>🎲 Chẵn Lẻ - Tài Xỉu</h3>
+          <div class="cltx-buttons">
+            <button onclick="placeBet('Chẵn')">Chẵn</button>
+            <button onclick="placeBet('Lẻ')">Lẻ</button>
+            <button onclick="placeBet('Tài')">Tài</button>
+            <button onclick="placeBet('Xỉu')">Xỉu</button>
+          </div>
+        </div>
+        <div class="bank-info" id="bankInfo">
+          <h3>🏧 Thông tin Bank nhận</h3>
+          <p id="bankName">Ngân hàng: MB Bank</p>
+          <p id="bankHolder">Chủ tài khoản: NGUYEN VAN A</p>
+          <p id="bankNumber">Số tài khoản: 0123456789</p>
+          <p>Cược tối thiểu: 10.000đ</p>
+          <p>Cược tối đa: 5.000.000đ</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="login" class="section">
+      <div class="form-container">
+        <h3>🔐 Đăng nhập</h3>
+        <input type="text" id="loginUser" placeholder="Số điện thoại hoặc tên tài khoản">
+        <input type="password" id="loginPass" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+      </div>
+    </div>
+
+    <div id="register" class="section">
+      <div class="form-container">
+        <h3>📝 Đăng ký</h3>
+        <input type="text" id="regPhone" placeholder="Số điện thoại">
+        <input type="text" id="regUser" placeholder="Tên tài khoản">
+        <input type="text" id="regName" placeholder="Tên hiển thị">
+        <input type="password" id="regPass" placeholder="Mật khẩu">
+        <button onclick="register()">Đăng ký</button>
+      </div>
+    </div>
+
+    <div id="deposit" class="section">
+      <div class="form-container">
+        <h3>💰 Nạp tiền</h3>
+        <input type="number" id="depositAmount" placeholder="Nhập số tiền (5.000 - 100.000.000 đ)">
+        <small>Lưu ý: Số tiền nạp tối thiểu 5.000đ, tối đa 100.000.000đ</small>
+        <select id="depositMethod">
+          <option value="qr">Chuyển khoản qua QR</option>
+          <option value="manual">Chuyển khoản viết tay</option>
+        </select>
+        <div id="depositResult"></div>
+        <button onclick="generateDepositInfo()">Tiếp tục</button>
+      </div>
+    </div>
+
+    <div id="withdraw" class="section">
+      <div class="form-container">
+        <h3>💸 Rút tiền</h3>
+        <input type="text" id="withdrawBank" placeholder="Tên ngân hàng">
+        <input type="text" id="withdrawNumber" placeholder="Số tài khoản">
+        <input type="text" id="withdrawName" placeholder="Tên người nhận">
+        <button onclick="saveWithdrawInfo()">Lưu thông tin rút</button>
+      </div>
     </div>
   </div>
 
   <script>
     const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
-
-    function updateBalanceDisplay() {
-      const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
-      if (current && current.user && users[current.user]) {
-        const balance = users[current.user].balance || 0;
-        document.getElementById('balanceDisplay').innerText = `💳 Số dư: ${balance.toLocaleString()} đ`;
-      } else {
-        document.getElementById('balanceDisplay').innerText = '';
-      }
-    }
-
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-
     function register() {
-      const phone = prompt("Số điện thoại");
-      const user = prompt("Tên tài khoản");
-      const name = prompt("Tên hiển thị");
-      const pass = prompt("Mật khẩu");
+      const phone = document.getElementById('regPhone').value;
+      const user = document.getElementById('regUser').value;
+      const name = document.getElementById('regName').value;
+      const pass = document.getElementById('regPass').value;
       if (!phone || !user || !pass || !name) return alert("Vui lòng điền đầy đủ thông tin!");
       if (users[phone] || users[user]) return alert("Tài khoản đã tồn tại!");
-      users[phone] = { user, pass, name, balance: 0, status: "active" };
-      users[user] = users[phone];
+      users[phone] = { user, pass, name };
+      users[user] = { user, pass, name };
       localStorage.setItem('hp_users', JSON.stringify(users));
       alert("Đăng ký thành công!");
+      showSection('login');
     }
-
     function login() {
-      const input = prompt("Tài khoản/SĐT");
-      const pass = prompt("Mật khẩu");
+      const input = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
       if (!users[input]) return alert("Không tìm thấy tài khoản!");
       if (users[input].pass !== pass) return alert("Sai mật khẩu!");
-      if (users[input].status === 'locked') return alert("Tài khoản đã bị cấm!");
-      if (users[input].status === 'temp-locked') return alert("Tài khoản bị khóa tạm thời. Liên hệ CSKH!");
-
       sessionStorage.setItem('hp_currentUser', JSON.stringify(users[input]));
+      alert("Đăng nhập thành công!");
+      showSection('home');
       document.getElementById('userDisplay').innerText = users[input].name;
-      updateBalanceDisplay();
-      if (input === 'thaihuubang' && pass === 'aotretrau123@') {
-        const menu = document.getElementById('menuList');
-        const li = document.createElement('li');
-        li.innerText = '🛠 Quản trị';
-        li.onclick = () => showAdminPanel();
-        menu.appendChild(li);
+    }
+    function generateDepositInfo() {
+      const amount = parseInt(document.getElementById('depositAmount').value);
+      const method = document.getElementById('depositMethod').value;
+      const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
+      if (!current) return alert("Vui lòng đăng nhập trước!");
+      if (amount < 5000 || amount > 100000000) return alert("Số tiền phải từ 5.000 đến 100.000.000 đ");
+      let html = '';
+      if (method === 'qr') {
+        html = `
+          <p>🔁 Quét mã QR ngân hàng dưới đây:</p>
+          <img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;">
+          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
+        `;
+      } else {
+        html = `
+          <p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
+          <p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p>
+          <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
+          <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
+          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
+        `;
       }
+      document.getElementById('depositResult').innerHTML = html;
+    }
+    function saveWithdrawInfo() {
+      const bank = document.getElementById('withdrawBank').value;
+      const number = document.getElementById('withdrawNumber').value;
+      const name = document.getElementById('withdrawName').value;
+      document.getElementById('bankName').innerText = `Ngân hàng: ${bank}`;
+      document.getElementById('bankNumber').innerText = `Số tài khoản: ${number}`;
+      document.getElementById('bankHolder').innerText = `Chủ tài khoản: ${name}`;
+      alert("Đã lưu thông tin rút tiền thành công!");
       showSection('home');
     }
-
-    function showAdminPanel() {
-      const list = document.getElementById('userList');
-      list.innerHTML = '';
-      const seen = new Set();
-      for (let key in users) {
-        if (seen.has(users[key].user)) continue;
-        seen.add(users[key].user);
-        const userBox = document.createElement('div');
-        userBox.className = 'admin-user';
-        userBox.innerHTML = `👤 ${users[key].name} (${users[key].user}) - ${users[key].balance.toLocaleString()}đ - ${users[key].status || 'active'}`;
-        userBox.onclick = () => showAdminActions(users[key].user);
-        list.appendChild(userBox);
-      }
-      showSection('adminPanel');
+    function placeBet(option) {
+      alert(`Bạn đã chọn: ${option}`);
     }
-
-    function showAdminActions(username) {
-      const amount = prompt("Nhập số tiền muốn cộng cho " + username + " (bỏ trống nếu không cộng)");
-      if (amount) {
-        users[username].balance += parseInt(amount);
-      }
-      const action = prompt("Nhập hành động: delete / temp / ban (xóa, khóa tạm, cấm)");
-      if (action === 'delete') {
-        for (let key in users) {
-          if (users[key].user === username) delete users[key];
-        }
-      } else if (action === 'temp') {
-        users[username].status = 'temp-locked';
-      } else if (action === 'ban') {
-        users[username].status = 'locked';
-      }
-      localStorage.setItem('hp_users', JSON.stringify(users));
-      alert("Thao tác hoàn tất");
-      showAdminPanel();
-    }
-
     window.onload = () => {
       const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
       if (current) {
         document.getElementById('userDisplay').innerText = current.name;
-        updateBalanceDisplay();
       }
     };
   </script>
