@@ -4,145 +4,144 @@
   <meta charset="UTF-8">
   <title>Hoàng Phát Bank</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #111;
+      background: #121212;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
     }
-    aside {
-      width: 250px;
-      background: #1a1a1a;
+    .sidebar {
+      width: 260px;
+      background: #1e1e1e;
+      height: 100vh;
       padding: 20px;
     }
-    aside h1 {
-      color: #ff8000;
-      font-size: 24px;
+    .sidebar h1 {
+      font-size: 20px;
+      color: orange;
       margin-bottom: 30px;
     }
-    aside ul {
+    .sidebar ul {
       list-style: none;
     }
-    aside ul li {
-      margin-bottom: 15px;
-      font-size: 15px;
-      color: #ccc;
+    .sidebar ul li {
+      margin: 15px 0;
+      cursor: pointer;
     }
-    aside ul li::before {
-      content: '📌 ';
-      color: #ff8000;
+    .sidebar ul li:hover {
+      color: gold;
     }
     .main {
       flex: 1;
       padding: 20px;
     }
-    .header-nav {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
+    .hidden {
+      display: none;
     }
-    .header-nav a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .header-nav a:hover {
-      color: #ff8000;
-    }
-    .games, .bank {
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #333;
-      text-align: center;
-    }
-    th {
-      color: #ff8000;
-    }
-    .highlight {
-      color: #ff8000;
-      font-weight: bold;
-    }
-    .chat {
-      background: #ff8000;
-      padding: 12px 16px;
-      color: #fff;
+    .form-container {
+      background: #222;
+      padding: 30px;
       border-radius: 10px;
-      display: inline-block;
-      font-size: 14px;
-      text-align: center;
-      margin-top: 10px;
-      cursor: pointer;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+    input { background: #333; color: #fff; }
+    button { background: orange; color: #000; font-weight: bold; }
+    .user-display {
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #0f0;
     }
   </style>
 </head>
 <body>
-  <aside>
-    <h1>HOÀNG PHÁT BANK</h1>
+  <div class="sidebar">
+    <h1>Hoàng Phát Bank</h1>
+    <div class="user-display" id="userDisplay">Chưa đăng nhập</div>
     <ul>
-      <li>Trang chủ</li>
-      <li>Đăng nhập</li>
-      <li>Đăng ký</li>
-      <li>Giftcode</li>
-      <li>Nhiệm vụ ngày</li>
-      <li>Nổ hũ</li>
-      <li>Ưu đãi VIP</li>
-      <li>Fan miễn phí 200K</li>
-      <li>Đại lý Hoàng Phát</li>
-      <li>Cài đặt</li>
+      <li onclick="showSection('home')">Trang chủ</li>
+      <li onclick="showSection('login')">Đăng nhập</li>
+      <li onclick="showSection('register')">Đăng ký</li>
     </ul>
-  </aside>
+  </div>
 
   <div class="main">
-    <div class="header-nav">
-      <a href="#">CLTX</a>
-      <a href="#">CLTX2</a>
-      <a href="#">1 PHẦN 3</a>
-      <a href="#">TỔNG 3 SỐ</a>
-      <a href="#">XIÊN</a>
-      <a href="#">GẤP 3</a>
-      <a href="#">RÚT TIỀN</a>
-      <a href="#">NẠP TIỀN</a>
-      <a href="#">SICBO</a>
-      <a href="#">TÀI XẮ MD5</a>
+    <div id="homeSection">
+      <h2>Chào mừng đến với Hoàng Phát Bank</h2>
+      <p>Vui lòng đăng nhập hoặc đăng ký để tiếp tục.</p>
     </div>
 
-    <div class="games">
-      <h2>🎲 Chẳn lẻ - Tài xỉu</h2>
-      <table>
-        <tr><th>Trò chơi</th><th>Đuôi tiền</th><th>1 số cuối</th><th>Tỷ lệ</th></tr>
-        <tr><td>Chẳn</td><td>00</td><td>2 4 6 8</td><td>x2.7</td></tr>
-        <tr><td>Lẻ</td><td>01</td><td>1 3 5 7</td><td>x2.7</td></tr>
-        <tr><td>Tài</td><td>02</td><td>5 6 7 8</td><td>x2.7</td></tr>
-        <tr><td>Xỉu</td><td>03</td><td>1 2 3 4</td><td>x2.7</td></tr>
-      </table>
+    <div id="loginSection" class="hidden">
+      <div class="form-container">
+        <h3>Đăng nhập</h3>
+        <input type="text" id="loginUser" placeholder="Số điện thoại hoặc tên tài khoản">
+        <input type="password" id="loginPass" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+      </div>
     </div>
 
-    <div class="bank">
-      <h2>🏦 Thông tin bank nhận</h2>
-      <table>
-        <tr><th>Ngân hàng nhận</th><th>Tài khoản</th><th>Cuớc min</th><th>Cuớc max</th><th>Mã QR</th></tr>
-        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
-        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
-        <tr><td class="highlight">HOÀNG PHÁT BANK</td><td>ĐĂNG NHẬP</td><td>10,000</td><td>3,000,999</td><td>-</td></tr>
-      </table>
-      <div class="chat">💬 CHAT NGAY VỚI CSKH</div>
+    <div id="registerSection" class="hidden">
+      <div class="form-container">
+        <h3>Đăng ký</h3>
+        <input type="text" id="regPhone" placeholder="Số điện thoại">
+        <input type="text" id="regUser" placeholder="Tên tài khoản">
+        <input type="text" id="regName" placeholder="Tên hiển thị">
+        <input type="password" id="regPass" placeholder="Mật khẩu">
+        <button onclick="register()">Đăng ký</button>
+      </div>
     </div>
   </div>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
+
+    function showSection(id) {
+      document.getElementById('homeSection').classList.add('hidden');
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('registerSection').classList.add('hidden');
+      document.getElementById(id + 'Section').classList.remove('hidden');
+    }
+
+    function register() {
+      const phone = document.getElementById('regPhone').value;
+      const user = document.getElementById('regUser').value;
+      const name = document.getElementById('regName').value;
+      const pass = document.getElementById('regPass').value;
+      if (!phone || !user || !pass || !name) return alert("Điền đầy đủ thông tin!");
+      if (users[phone] || users[user]) return alert("Tài khoản hoặc số đã tồn tại!");
+
+      users[phone] = { user, pass, name };
+      users[user] = { user, pass, name };
+      localStorage.setItem('hp_users', JSON.stringify(users));
+      alert("Đăng ký thành công!");
+      showSection('login');
+    }
+
+    function login() {
+      const input = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      if (!users[input]) return alert("Không tìm thấy tài khoản!");
+      if (users[input].pass !== pass) return alert("Sai mật khẩu!");
+      sessionStorage.setItem('hp_currentUser', JSON.stringify(users[input]));
+      alert("Đăng nhập thành công!");
+      showSection('home');
+      document.getElementById('userDisplay').innerText = users[input].name;
+    }
+
+    window.onload = () => {
+      const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
+      if (current) {
+        document.getElementById('userDisplay').innerText = current.name;
+      }
+    };
+  </script>
 </body>
 </html>
