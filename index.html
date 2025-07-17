@@ -140,7 +140,7 @@
   <div class="sidebar">
     <div class="logo">🏦 Hoàng Phát Bank</div>
     <div id="userDisplay" class="user-display">Chưa đăng nhập</div>
-    <ul class="menu">
+    <ul class="menu" id="menuList">
       <li onclick="showSection('home')">🏠 Trang chủ</li>
       <li onclick="showSection('login')">🔐 Đăng nhập</li>
       <li onclick="showSection('register')">📝 Đăng ký</li>
@@ -176,6 +176,13 @@
           <p>Cược tối thiểu: 10.000đ</p>
           <p>Cược tối đa: 5.000.000đ</p>
         </div>
+      </div>
+    </div>
+
+    <div id="adminPanel" class="section">
+      <div class="form-container">
+        <h3>👑 Quản trị viên</h3>
+        <div id="userList"></div>
       </div>
     </div>
 
@@ -223,13 +230,14 @@
       </div>
     </div>
   </div>
-
   <script>
     const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
+
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
+
     function register() {
       const phone = document.getElementById('regPhone').value;
       const user = document.getElementById('regUser').value;
@@ -243,16 +251,47 @@
       alert("Đăng ký thành công!");
       showSection('login');
     }
+
     function login() {
       const input = document.getElementById('loginUser').value;
       const pass = document.getElementById('loginPass').value;
       if (!users[input]) return alert("Không tìm thấy tài khoản!");
       if (users[input].pass !== pass) return alert("Sai mật khẩu!");
-      sessionStorage.setItem('hp_currentUser', JSON.stringify(users[input]));
+      const current = users[input];
+      sessionStorage.setItem('hp_currentUser', JSON.stringify(current));
       alert("Đăng nhập thành công!");
+      document.getElementById('userDisplay').innerText = current.name;
+      if (current.user === 'thaihuubang' && current.pass === 'aotretrau123') {
+        const adminItem = document.createElement('li');
+        adminItem.innerText = '👑 Quản trị';
+        adminItem.onclick = () => showSection('adminPanel');
+        document.getElementById('menuList').appendChild(adminItem);
+        renderUserList();
+      }
       showSection('home');
-      document.getElementById('userDisplay').innerText = users[input].name;
     }
+
+    function renderUserList() {
+      const container = document.getElementById('userList');
+      container.innerHTML = '';
+      Object.entries(users).forEach(([key, u]) => {
+        if (!u || typeof u !== 'object' || !u.user) return;
+        const div = document.createElement('div');
+        div.innerHTML = `<b>${u.user}</b> (${u.name}) <button onclick="adminAction('${key}', 'delete')">Xóa</button> <button onclick="adminAction('${key}', 'lock')">Khóa</button> <button onclick="adminAction('${key}', 'ban')">Cấm</button>`;
+        container.appendChild(div);
+      });
+    }
+
+    function adminAction(id, action) {
+      if (!users[id]) return alert("Không tìm thấy người dùng");
+      if (action === 'delete') delete users[id];
+      else if (action === 'lock') users[id].status = 'locked';
+      else if (action === 'ban') users[id].status = 'banned';
+      localStorage.setItem('hp_users', JSON.stringify(users));
+      alert("Đã cập nhật người dùng");
+      renderUserList();
+    }
+
     function generateDepositInfo() {
       const amount = parseInt(document.getElementById('depositAmount').value);
       const method = document.getElementById('depositMethod').value;
@@ -261,22 +300,13 @@
       if (amount < 5000 || amount > 100000000) return alert("Số tiền phải từ 5.000 đến 100.000.000 đ");
       let html = '';
       if (method === 'qr') {
-        html = `
-          <p>🔁 Quét mã QR ngân hàng dưới đây:</p>
-          <img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;">
-          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
-        `;
+        html = `<p>🔁 Quét mã QR ngân hàng dưới đây:</p><img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;"><p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
       } else {
-        html = `
-          <p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
-          <p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p>
-          <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
-          <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
-          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
-        `;
+        html = `<p>🏦 Ngân hàng: <strong>MB Bank</strong></p><p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p><p>🔢 Số tài khoản: <strong>0335965737</strong></p><p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p><p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
       }
       document.getElementById('depositResult').innerHTML = html;
     }
+
     function saveWithdrawInfo() {
       const bank = document.getElementById('withdrawBank').value;
       const number = document.getElementById('withdrawNumber').value;
@@ -287,9 +317,11 @@
       alert("Đã lưu thông tin rút tiền thành công!");
       showSection('home');
     }
+
     function placeBet(option) {
       alert(`Bạn đã chọn: ${option}`);
     }
+
     window.onload = () => {
       const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
       if (current) {
