@@ -261,15 +261,19 @@
       if (amount < 5000 || amount > 100000000) return alert("Số tiền phải từ 5.000 đến 100.000.000 đ");
       let html = '';
       if (method === 'qr') {
-        html = <p>🔁 Quét mã QR ngân hàng dưới đây:</p>
-                <img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;">
-                <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>;
+        html = `
+          <p>🔁 Quét mã QR ngân hàng dưới đây:</p>
+          <img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;">
+          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
+        `;
       } else {
-        html = <p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
-                <p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p>
-                <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
-                <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
-                <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>;
+        html = `
+          <p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
+          <p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p>
+          <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
+          <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
+          <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>
+        `;
       }
       document.getElementById('depositResult').innerHTML = html;
     }
@@ -277,9 +281,9 @@
       const bank = document.getElementById('withdrawBank').value;
       const number = document.getElementById('withdrawNumber').value;
       const name = document.getElementById('withdrawName').value;
-      document.getElementById('bankName').innerText = Ngân hàng: ${bank};
-      document.getElementById('bankNumber').innerText = Số tài khoản: ${number};
-      document.getElementById('bankHolder').innerText = Chủ tài khoản: ${name};
+      document.getElementById('bankName').innerText = `Ngân hàng: ${bank}`;
+      document.getElementById('bankNumber').innerText = `Số tài khoản: ${number}`;
+      document.getElementById('bankHolder').innerText = `Chủ tài khoản: ${name}`;
       alert("Đã lưu thông tin rút tiền thành công!");
       showSection('home');
     }
