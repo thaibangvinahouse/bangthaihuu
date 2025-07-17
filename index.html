@@ -145,6 +145,7 @@
       <li onclick="showSection('login')">🔐 Đăng nhập</li>
       <li onclick="showSection('register')">📝 Đăng ký</li>
       <li onclick="showSection('deposit')">💰 Nạp tiền</li>
+      <li onclick="showSection('withdraw')">💸 Rút tiền</li>
     </ul>
   </div>
   <div class="main">
@@ -167,11 +168,11 @@
             <button>Xỉu</button>
           </div>
         </div>
-        <div class="bank-info">
+        <div class="bank-info" id="bankInfo">
           <h3>🏧 Thông tin Bank nhận</h3>
-          <p>Ngân hàng: MB Bank</p>
-          <p>Chủ tài khoản: NGUYEN VAN A</p>
-          <p>Số tài khoản: 0123456789</p>
+          <p id="bankName">Ngân hàng: MB Bank</p>
+          <p id="bankHolder">Chủ tài khoản: NGUYEN VAN A</p>
+          <p id="bankNumber">Số tài khoản: 0123456789</p>
           <p>Cược tối thiểu: 10.000đ</p>
           <p>Cược tối đa: 5.000.000đ</p>
         </div>
@@ -209,6 +210,16 @@
         </select>
         <div id="depositResult"></div>
         <button onclick="generateDepositInfo()">Tiếp tục</button>
+      </div>
+    </div>
+
+    <div id="withdraw" class="section">
+      <div class="form-container">
+        <h3>💸 Rút tiền</h3>
+        <input type="text" id="withdrawBank" placeholder="Tên ngân hàng">
+        <input type="text" id="withdrawNumber" placeholder="Số tài khoản">
+        <input type="text" id="withdrawName" placeholder="Tên người nhận">
+        <button onclick="saveWithdrawInfo()">Lưu thông tin rút</button>
       </div>
     </div>
   </div>
@@ -261,6 +272,16 @@
                 <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
       }
       document.getElementById('depositResult').innerHTML = html;
+    }
+    function saveWithdrawInfo() {
+      const bank = document.getElementById('withdrawBank').value;
+      const number = document.getElementById('withdrawNumber').value;
+      const name = document.getElementById('withdrawName').value;
+      document.getElementById('bankName').innerText = `Ngân hàng: ${bank}`;
+      document.getElementById('bankNumber').innerText = `Số tài khoản: ${number}`;
+      document.getElementById('bankHolder').innerText = `Chủ tài khoản: ${name}`;
+      alert("Đã lưu thông tin rút tiền thành công!");
+      showSection('home');
     }
     window.onload = () => {
       const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
