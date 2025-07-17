@@ -6,178 +6,155 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: url('https://i.ibb.co/ZK6s1kr/bg-casino.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
       font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #fff;
       display: flex;
+      height: 100vh;
     }
     .sidebar {
-      width: 260px;
-      background: #1e1e1e;
-      height: 100vh;
+      width: 240px;
+      background-color: #1e1e1e;
       padding: 20px;
     }
-    .sidebar h1 {
-      font-size: 20px;
-      color: orange;
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #FFD700;
       margin-bottom: 30px;
     }
-    .sidebar ul {
+    .menu li {
       list-style: none;
-    }
-    .sidebar ul li {
       margin: 15px 0;
       cursor: pointer;
+      color: #ccc;
     }
-    .sidebar ul li:hover {
-      color: gold;
+    .menu li:hover {
+      color: #fff;
     }
     .main {
       flex: 1;
       padding: 20px;
+      overflow-y: auto;
     }
-    .hidden {
+    .header-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .header-tabs div {
+      padding: 10px 15px;
+      background: #2c2c2c;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .header-tabs div:hover {
+      background: #FFD700;
+      color: #000;
+    }
+    .section {
       display: none;
     }
-    .form-container {
-      background: #222;
-      padding: 30px;
+    .section.active {
+      display: block;
+    }
+    .cltx-board, .bank-info {
+      background: #1c1c1c;
+      padding: 20px;
       border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .cltx-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .cltx-buttons button {
+      flex: 1 1 calc(25% - 10px);
+      padding: 12px;
+      font-size: 16px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cltx-buttons button:hover {
+      background: #FFD700;
+      color: #000;
+    }
+    .bank-info p {
+      margin: 8px 0;
+    }
+    .form-container {
       max-width: 400px;
       margin: auto;
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
     }
-    input, button {
+    .form-container input, .form-container button {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 5px;
       border: none;
     }
-    input { background: #333; color: #fff; }
-    button { background: orange; color: #000; font-weight: bold; }
-    .user-display {
-      margin-bottom: 20px;
-      font-weight: bold;
-      color: #0f0;
-    }
-    .game-area {
-      text-align: center;
-    }
-    .game-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin: 30px 0;
-    }
-    .card {
-      width: 220px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid gold;
-      border-radius: 12px;
-      text-align: center;
-      padding: 15px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px gold;
-    }
-    .card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .card h3 {
-      font-size: 18px;
-      color: #FFD700;
-      margin-bottom: 8px;
-    }
-    .card p {
-      font-size: 14px;
-      color: #00ffff;
-    }
-    .footer-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background: linear-gradient(45deg, #FFA500, #FF4500);
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .btn:hover {
-      background: linear-gradient(45deg, #FF6347, #FF8C00);
-      transform: scale(1.05);
-    }
+    .form-container input { background: #333; color: #fff; }
+    .form-container button { background: #FFD700; color: #000; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <h1>Hoàng Phát Bank</h1>
-    <div class="user-display" id="userDisplay">Chưa đăng nhập</div>
-    <ul>
-      <li onclick="showSection('home')">Trang chủ</li>
-      <li onclick="showSection('login')">Đăng nhập</li>
-      <li onclick="showSection('register')">Đăng ký</li>
+    <div class="logo">🏦 Hoàng Phát Bank</div>
+    <div id="userDisplay">Chưa đăng nhập</div>
+    <ul class="menu">
+      <li onclick="showSection('home')">🏠 Trang chủ</li>
+      <li onclick="showSection('login')">🔐 Đăng nhập</li>
+      <li onclick="showSection('register')">📝 Đăng ký</li>
     </ul>
   </div>
-
   <div class="main">
-    <div id="homeSection" class="game-area">
-      <h2>Chào mừng đến với Hoàng Phát Bank</h2>
-      <div class="game-row">
-        <div class="card">
-          <img src="https://i.ibb.co/QQZzkCX/taixiu.png" alt="Tài Xỉu MD5">
-          <h3>Tài Xỉu MD5</h3>
-          <p>$466,272,570</p>
-        </div>
-        <div class="card">
-          <img src="https://i.ibb.co/sb5bWkF/banca.png" alt="Bắn Cá">
-          <h3>Bắn Cá</h3>
-          <p>$128,517</p>
-        </div>
-        <div class="card">
-          <img src="https://i.ibb.co/GWHnMsF/aviator.png" alt="Aviator">
-          <h3>Aviator</h3>
-          <p>NEW</p>
-        </div>
-        <div class="card">
-          <img src="https://i.ibb.co/G3nbvmH/dragon.png" alt="Kho Báu Tứ Linh">
-          <h3>Kho Báu Tứ Linh</h3>
-          <p>$2,570,201,600</p>
+    <div class="header-tabs">
+      <div>CLTX</div>
+      <div>CLTX2</div>
+      <div>1 Phần 3</div>
+      <div>Tài Xỉu MD5</div>
+      <div>Mini game</div>
+    </div>
+
+    <div id="home" class="section active">
+      <div class="cltx-board">
+        <h3>🎲 Chẵn lẻ - Tài Xỉu</h3>
+        <div class="cltx-buttons">
+          <button>Chẵn</button>
+          <button>Lẻ</button>
+          <button>Tài</button>
+          <button>Xỉu</button>
         </div>
       </div>
-      <div class="footer-buttons">
-        <button class="btn">Nạp Tiền</button>
-        <button class="btn">Hỗ Trợ</button>
-        <button class="btn">Mini Game</button>
+      <div class="bank-info">
+        <h3>🏧 Thông tin Bank nhận</h3>
+        <p>Ngân hàng: MB Bank</p>
+        <p>Chủ tài khoản: NGUYEN VAN A</p>
+        <p>Số tài khoản: 0123456789</p>
+        <p>Min: 10k - Max: 5tr</p>
       </div>
     </div>
 
-    <div id="loginSection" class="hidden">
+    <div id="login" class="section">
       <div class="form-container">
-        <h3>Đăng nhập</h3>
+        <h3>🔐 Đăng nhập</h3>
         <input type="text" id="loginUser" placeholder="Số điện thoại hoặc tên tài khoản">
         <input type="password" id="loginPass" placeholder="Mật khẩu">
         <button onclick="login()">Đăng nhập</button>
       </div>
     </div>
 
-    <div id="registerSection" class="hidden">
+    <div id="register" class="section">
       <div class="form-container">
-        <h3>Đăng ký</h3>
+        <h3>📝 Đăng ký</h3>
         <input type="text" id="regPhone" placeholder="Số điện thoại">
         <input type="text" id="regUser" placeholder="Tên tài khoản">
         <input type="text" id="regName" placeholder="Tên hiển thị">
@@ -186,15 +163,12 @@
       </div>
     </div>
   </div>
-
   <script>
     const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
 
     function showSection(id) {
-      document.getElementById('homeSection').classList.add('hidden');
-      document.getElementById('loginSection').classList.add('hidden');
-      document.getElementById('registerSection').classList.add('hidden');
-      document.getElementById(id + 'Section').classList.remove('hidden');
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
     function register() {
@@ -202,8 +176,8 @@
       const user = document.getElementById('regUser').value;
       const name = document.getElementById('regName').value;
       const pass = document.getElementById('regPass').value;
-      if (!phone || !user || !pass || !name) return alert("Điền đầy đủ thông tin!");
-      if (users[phone] || users[user]) return alert("Tài khoản hoặc số đã tồn tại!");
+      if (!phone || !user || !pass || !name) return alert("Vui lòng điền đầy đủ thông tin!");
+      if (users[phone] || users[user]) return alert("Tài khoản đã tồn tại!");
 
       users[phone] = { user, pass, name };
       users[user] = { user, pass, name };
