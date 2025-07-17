@@ -109,14 +109,14 @@
       padding: 20px;
       border-radius: 10px;
     }
-    .form-container input, .form-container button {
+    .form-container input, .form-container select, .form-container button {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border: none;
       border-radius: 5px;
     }
-    .form-container input {
+    .form-container input, .form-container select {
       background-color: #333;
       color: #fff;
     }
@@ -138,6 +138,7 @@
       <li onclick="showSection('home')">🏠 Trang chủ</li>
       <li onclick="showSection('login')">🔐 Đăng nhập</li>
       <li onclick="showSection('register')">📝 Đăng ký</li>
+      <li onclick="showSection('deposit')">💰 Nạp tiền</li>
     </ul>
   </div>
   <div class="main">
@@ -190,16 +191,27 @@
         <button onclick="register()">Đăng ký</button>
       </div>
     </div>
+
+    <div id="deposit" class="section">
+      <div class="form-container">
+        <h3>💰 Nạp tiền</h3>
+        <input type="number" id="depositAmount" placeholder="Nhập số tiền (5.000 - 100.000.000 đ)">
+        <select id="depositMethod">
+          <option value="qr">Chuyển khoản qua QR</option>
+          <option value="manual">Chuyển khoản viết tay</option>
+        </select>
+        <div id="depositResult"></div>
+        <button onclick="generateDepositInfo()">Tiếp tục</button>
+      </div>
+    </div>
   </div>
 
   <script>
     const users = JSON.parse(localStorage.getItem('hp_users') || '{}');
-
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-
     function register() {
       const phone = document.getElementById('regPhone').value;
       const user = document.getElementById('regUser').value;
@@ -207,14 +219,12 @@
       const pass = document.getElementById('regPass').value;
       if (!phone || !user || !pass || !name) return alert("Vui lòng điền đầy đủ thông tin!");
       if (users[phone] || users[user]) return alert("Tài khoản đã tồn tại!");
-
       users[phone] = { user, pass, name };
       users[user] = { user, pass, name };
       localStorage.setItem('hp_users', JSON.stringify(users));
       alert("Đăng ký thành công!");
       showSection('login');
     }
-
     function login() {
       const input = document.getElementById('loginUser').value;
       const pass = document.getElementById('loginPass').value;
@@ -225,7 +235,25 @@
       showSection('home');
       document.getElementById('userDisplay').innerText = users[input].name;
     }
-
+    function generateDepositInfo() {
+      const amount = parseInt(document.getElementById('depositAmount').value);
+      const method = document.getElementById('depositMethod').value;
+      const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
+      if (!current) return alert("Vui lòng đăng nhập trước!");
+      if (amount < 5000 || amount > 100000000) return alert("Số tiền phải từ 5.000 đến 100.000.000 đ");
+      let html = '';
+      if (method === 'qr') {
+        html = `<p>🔁 Quét mã QR ngân hàng dưới đây:</p>
+                <img src="https://example.com/qr.png" alt="QR Code" style="width:200px; margin:10px 0;">
+                <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
+      } else {
+        html = `<p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
+                <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
+                <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
+                <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
+      }
+      document.getElementById('depositResult').innerHTML = html;
+    }
     window.onload = () => {
       const current = JSON.parse(sessionStorage.getItem('hp_currentUser'));
       if (current) {
