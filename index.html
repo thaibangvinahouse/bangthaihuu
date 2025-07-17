@@ -126,6 +126,12 @@
       font-weight: bold;
       cursor: pointer;
     }
+    .form-container small {
+      color: #ccc;
+      display: block;
+      margin-top: -5px;
+      margin-bottom: 10px;
+    }
     .section { display: none; }
     .section.active { display: block; }
   </style>
@@ -196,6 +202,7 @@
       <div class="form-container">
         <h3>💰 Nạp tiền</h3>
         <input type="number" id="depositAmount" placeholder="Nhập số tiền (5.000 - 100.000.000 đ)">
+        <small>Lưu ý: Số tiền nạp tối thiểu 5.000đ, tối đa 100.000.000đ</small>
         <select id="depositMethod">
           <option value="qr">Chuyển khoản qua QR</option>
           <option value="manual">Chuyển khoản viết tay</option>
@@ -248,6 +255,7 @@
                 <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
       } else {
         html = `<p>🏦 Ngân hàng: <strong>MB Bank</strong></p>
+                <p>👤 Chủ tài khoản: <strong>THAI HUU BANG</strong></p>
                 <p>🔢 Số tài khoản: <strong>0335965737</strong></p>
                 <p>💰 Số tiền: <strong>${amount.toLocaleString()} đ</strong></p>
                 <p>📌 Nội dung chuyển khoản: <strong>${current.name}</strong></p>`;
