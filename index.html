@@ -23,4 +23,80 @@
     </div>
 
     <!-- Nội dung tab: Liên Quân -->
-    <div id
+    <div id="content-lienquan">
+      <label class="block text-sm font-medium mt-4">ID người chơi Liên Quân:</label>
+      <input type="text" placeholder="Nhập UID Liên Quân" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+
+      <label class="block text-sm font-medium mb-1">Chọn mệnh giá:</label>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">20.000đ (40 QH)</button>
+        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">50.000đ (105 QH)</button>
+        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">100.000đ (215 QH)</button>
+        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">200.000đ (430 QH)</button>
+      </div>
+
+      <label class="block text-sm font-medium mb-1">Phương thức thanh toán:</label>
+      <select class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+        <option>Thẻ Garena</option>
+        <option>Ví Momo</option>
+        <option>ZaloPay</option>
+        <option>Internet Banking</option>
+      </select>
+
+      <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl w-full transition-all duration-300">
+        Nạp Quân Huy
+      </button>
+    </div>
+
+    <!-- Nội dung tab: Free Fire -->
+    <div id="content-freefire" class="hidden">
+      <label class="block text-sm font-medium mt-4">ID người chơi Free Fire:</label>
+      <input type="text" placeholder="Nhập UID Free Fire" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+
+      <label class="block text-sm font-medium mb-1">Chọn gói Kim Cương:</label>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">20.000đ (100 KC)</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">50.000đ (270 KC)</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">100.000đ (560 KC)</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">200.000đ (1200 KC)</button>
+      </div>
+
+      <label class="block text-sm font-medium mb-1">Phương thức thanh toán:</label>
+      <select class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+        <option>Thẻ Garena</option>
+        <option>Ví Momo</option>
+        <option>ZaloPay</option>
+        <option>Internet Banking</option>
+      </select>
+
+      <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-xl w-full transition-all duration-300">
+        Nạp Kim Cương
+      </button>
+    </div>
+
+    <p class="text-xs text-center text-gray-500">© 2025 Garena. Website demo giao diện nạp thẻ.</p>
+  </div>
+
+  <!-- Script xử lý tab -->
+  <script>
+    const tabLQ = document.getElementById("tab-lienquan");
+    const tabFF = document.getElementById("tab-freefire");
+    const contentLQ = document.getElementById("content-lienquan");
+    const contentFF = document.getElementById("content-freefire");
+
+    tabLQ.addEventListener("click", () => {
+      tabLQ.classList.add("bg-red-100", "text-red-700");
+      tabFF.classList.remove("bg-yellow-100", "text-yellow-700");
+      contentLQ.classList.remove("hidden");
+      contentFF.classList.add("hidden");
+    });
+
+    tabFF.addEventListener("click", () => {
+      tabFF.classList.add("bg-yellow-100", "text-yellow-700");
+      tabLQ.classList.remove("bg-red-100", "text-red-700");
+      contentFF.classList.remove("hidden");
+      contentLQ.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>
