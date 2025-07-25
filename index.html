@@ -2,85 +2,95 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Nhận Quà Garena | Free Fire & Liên Quân</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Trang Nhận Quà Free Fire & Liên Quân</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    img.logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #ffcc00;
+    }
+    .card {
+      background: #2c2c54;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 90%;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ffcc00;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ffd633;
+    }
+    .result {
+      margin-top: 20px;
+      color: #ff8080;
+      font-weight: bold;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 text-white min-h-screen flex items-center justify-center p-4">
-  <div class="bg-white text-black rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6">
-
-    <!-- Logo + Tiêu đề -->
-    <div class="text-center">
-      <img src="https://i.imgur.com/Lj1D69T.png" alt="Garena Logo" class="mx-auto w-24 mb-3">
-      <h1 class="text-2xl font-bold">Sự Kiện Tặng Quà Garena</h1>
-      <p class="text-sm text-gray-600">Miễn phí Kim Cương & Quân Huy</p>
-    </div>
-
-    <!-- Chọn game -->
-    <div class="flex justify-center space-x-4">
-      <button id="tab-ff" class="bg-red-100 text-red-700 px-4 py-2 rounded-full font-semibold border border-red-300">Free Fire</button>
-      <button id="tab-lq" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full font-semibold border border-gray-300">Liên Quân</button>
-    </div>
-
-    <!-- Nội dung Free Fire -->
-    <div id="content-ff" class="mt-4">
-      <label class="block text-sm font-medium mb-1">Nhập UID Free Fire:</label>
-      <input type="text" placeholder="123456789" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
-
-      <label class="block text-sm font-medium mb-1">Chọn gói Kim Cương:</label>
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">100 KC</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">270 KC</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">560 KC</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">999 KC</button>
-      </div>
-
-      <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-xl w-full">
-        Nhận Kim Cương
-      </button>
-    </div>
-
-    <!-- Nội dung Liên Quân -->
-    <div id="content-lq" class="mt-4 hidden">
-      <label class="block text-sm font-medium mb-1">Nhập UID Liên Quân:</label>
-      <input type="text" placeholder="987654321" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
-
-      <label class="block text-sm font-medium mb-1">Chọn gói Quân Huy:</label>
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">40 QH</button>
-        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">105 QH</button>
-        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">215 QH</button>
-        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">999 QH</button>
-      </div>
-
-      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl w-full">
-        Nhận Quân Huy
-      </button>
-    </div>
-
-    <p class="text-xs text-center text-gray-500">© 2025 Garena | Giao diện demo - không liên kết chính thức.</p>
+<body>
+  <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/2/20/Garena_logo.svg/2048px-Garena_logo.svg.png" alt="Garena Logo" class="logo">
+  <h1>Trang Tặng Quà Free Fire & Liên Quân</h1>
+  <div class="card">
+    <select id="game">
+      <option value="freefire">Free Fire</option>
+      <option value="lienquan">Liên Quân</option>
+    </select>
+    <input type="text" id="userID" placeholder="Nhập ID Game">
+    <select id="goi">
+      <option value="100">100 Kim Cương / Quân Huy</option>
+      <option value="500">500 Kim Cương / Quân Huy</option>
+      <option value="1000">1000 Kim Cương / Quân Huy</option>
+    </select>
+    <button onclick="nhanQua()">Nhận Quà</button>
+    <button onclick="khongTraLoi()">Không trả lời</button>
+    <div class="result" id="ketqua"></div>
   </div>
 
-  <!-- Script đổi tab -->
   <script>
-    const tabFF = document.getElementById("tab-ff");
-    const tabLQ = document.getElementById("tab-lq");
-    const contentFF = document.getElementById("content-ff");
-    const contentLQ = document.getElementById("content-lq");
+    function nhanQua() {
+      const game = document.getElementById('game').value;
+      const userID = document.getElementById('userID').value.trim();
+      const goi = document.getElementById('goi').value;
+      const ketqua = document.getElementById('ketqua');
 
-    tabFF.addEventListener("click", () => {
-      tabFF.classList.add("bg-red-100", "text-red-700");
-      tabLQ.classList.remove("bg-blue-100", "text-blue-700");
-      contentFF.classList.remove("hidden");
-      contentLQ.classList.add("hidden");
-    });
+      if (userID === '') {
+        ketqua.innerHTML = "Vui lòng nhập ID game trước khi nhận quà.";
+        return;
+      }
 
-    tabLQ.addEventListener("click", () => {
-      tabLQ.classList.add("bg-blue-100", "text-blue-700");
-      tabFF.classList.remove("bg-red-100", "text-red-700");
-      contentLQ.classList.remove("hidden");
-      contentFF.classList.add("hidden");
-    });
+      const gameName = game === "freefire" ? "Free Fire" : "Liên Quân";
+      const loai = game === "freefire" ? "kim cương" : "quân huy";
+
+      ketqua.innerHTML = `Bạn chắc chắn muốn nhận ${goi} ${loai} lậu về tài khoản ${userID}?<br>⚠ Vì đây là ${loai} lậu nên có thể bị âm ${loai} hoặc khóa tài khoản. Hãy cân nhắc trước khi nhận!`;
+    }
+
+    function khongTraLoi() {
+      document.getElementById('ketqua').innerHTML = "Bạn đã chọn 'Không trả lời'. Hệ thống sẽ không tiếp tục!";
+    }
   </script>
 </body>
 </html>
