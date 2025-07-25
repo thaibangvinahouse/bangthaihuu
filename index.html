@@ -2,100 +2,84 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Nạp Quân Huy | Garena</title>
+  <title>Nhận Quà Garena | Free Fire & Liên Quân</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 min-h-screen text-white flex items-center justify-center p-4">
+<body class="bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 text-white min-h-screen flex items-center justify-center p-4">
   <div class="bg-white text-black rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6">
 
-    <!-- Logo + tiêu đề -->
+    <!-- Logo + Tiêu đề -->
     <div class="text-center">
       <img src="https://i.imgur.com/Lj1D69T.png" alt="Garena Logo" class="mx-auto w-24 mb-3">
-      <h1 class="text-2xl font-bold">Nạp thẻ Garena</h1>
-      <p class="text-sm text-gray-600">Chọn game để bắt đầu</p>
+      <h1 class="text-2xl font-bold">Sự Kiện Tặng Quà Garena</h1>
+      <p class="text-sm text-gray-600">Miễn phí Kim Cương & Quân Huy</p>
     </div>
 
-    <!-- Tab chọn game -->
+    <!-- Chọn game -->
     <div class="flex justify-center space-x-4">
-      <button id="tab-lienquan" class="bg-red-100 text-red-700 px-4 py-2 rounded-full font-semibold border border-red-300 active">Liên Quân</button>
-      <button id="tab-freefire" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full font-semibold border border-gray-300">Free Fire</button>
+      <button id="tab-ff" class="bg-red-100 text-red-700 px-4 py-2 rounded-full font-semibold border border-red-300">Free Fire</button>
+      <button id="tab-lq" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full font-semibold border border-gray-300">Liên Quân</button>
     </div>
 
-    <!-- Nội dung tab: Liên Quân -->
-    <div id="content-lienquan">
-      <label class="block text-sm font-medium mt-4">ID người chơi Liên Quân:</label>
-      <input type="text" placeholder="Nhập UID Liên Quân" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
-
-      <label class="block text-sm font-medium mb-1">Chọn mệnh giá:</label>
-      <div class="grid grid-cols-2 gap-3 mb-3">
-        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">20.000đ (40 QH)</button>
-        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">50.000đ (105 QH)</button>
-        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">100.000đ (215 QH)</button>
-        <button class="bg-gray-100 hover:bg-red-200 rounded-xl py-2 px-3 font-medium">200.000đ (430 QH)</button>
-      </div>
-
-      <label class="block text-sm font-medium mb-1">Phương thức thanh toán:</label>
-      <select class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
-        <option>Thẻ Garena</option>
-        <option>Ví Momo</option>
-        <option>ZaloPay</option>
-        <option>Internet Banking</option>
-      </select>
-
-      <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl w-full transition-all duration-300">
-        Nạp Quân Huy
-      </button>
-    </div>
-
-    <!-- Nội dung tab: Free Fire -->
-    <div id="content-freefire" class="hidden">
-      <label class="block text-sm font-medium mt-4">ID người chơi Free Fire:</label>
-      <input type="text" placeholder="Nhập UID Free Fire" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+    <!-- Nội dung Free Fire -->
+    <div id="content-ff" class="mt-4">
+      <label class="block text-sm font-medium mb-1">Nhập UID Free Fire:</label>
+      <input type="text" placeholder="123456789" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
 
       <label class="block text-sm font-medium mb-1">Chọn gói Kim Cương:</label>
-      <div class="grid grid-cols-2 gap-3 mb-3">
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">20.000đ (100 KC)</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">50.000đ (270 KC)</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">100.000đ (560 KC)</button>
-        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">200.000đ (1200 KC)</button>
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">100 KC</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">270 KC</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">560 KC</button>
+        <button class="bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">999 KC</button>
       </div>
 
-      <label class="block text-sm font-medium mb-1">Phương thức thanh toán:</label>
-      <select class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
-        <option>Thẻ Garena</option>
-        <option>Ví Momo</option>
-        <option>ZaloPay</option>
-        <option>Internet Banking</option>
-      </select>
-
-      <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-xl w-full transition-all duration-300">
-        Nạp Kim Cương
+      <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-xl w-full">
+        Nhận Kim Cương
       </button>
     </div>
 
-    <p class="text-xs text-center text-gray-500">© 2025 Garena. Website demo giao diện nạp thẻ.</p>
+    <!-- Nội dung Liên Quân -->
+    <div id="content-lq" class="mt-4 hidden">
+      <label class="block text-sm font-medium mb-1">Nhập UID Liên Quân:</label>
+      <input type="text" placeholder="987654321" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+
+      <label class="block text-sm font-medium mb-1">Chọn gói Quân Huy:</label>
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">40 QH</button>
+        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">105 QH</button>
+        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">215 QH</button>
+        <button class="bg-gray-100 hover:bg-blue-200 rounded-xl py-2 px-3 font-medium">999 QH</button>
+      </div>
+
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl w-full">
+        Nhận Quân Huy
+      </button>
+    </div>
+
+    <p class="text-xs text-center text-gray-500">© 2025 Garena | Giao diện demo - không liên kết chính thức.</p>
   </div>
 
-  <!-- Script xử lý tab -->
+  <!-- Script đổi tab -->
   <script>
-    const tabLQ = document.getElementById("tab-lienquan");
-    const tabFF = document.getElementById("tab-freefire");
-    const contentLQ = document.getElementById("content-lienquan");
-    const contentFF = document.getElementById("content-freefire");
-
-    tabLQ.addEventListener("click", () => {
-      tabLQ.classList.add("bg-red-100", "text-red-700");
-      tabFF.classList.remove("bg-yellow-100", "text-yellow-700");
-      contentLQ.classList.remove("hidden");
-      contentFF.classList.add("hidden");
-    });
+    const tabFF = document.getElementById("tab-ff");
+    const tabLQ = document.getElementById("tab-lq");
+    const contentFF = document.getElementById("content-ff");
+    const contentLQ = document.getElementById("content-lq");
 
     tabFF.addEventListener("click", () => {
-      tabFF.classList.add("bg-yellow-100", "text-yellow-700");
-      tabLQ.classList.remove("bg-red-100", "text-red-700");
+      tabFF.classList.add("bg-red-100", "text-red-700");
+      tabLQ.classList.remove("bg-blue-100", "text-blue-700");
       contentFF.classList.remove("hidden");
       contentLQ.classList.add("hidden");
+    });
+
+    tabLQ.addEventListener("click", () => {
+      tabLQ.classList.add("bg-blue-100", "text-blue-700");
+      tabFF.classList.remove("bg-red-100", "text-red-700");
+      contentLQ.classList.remove("hidden");
+      contentFF.classList.add("hidden");
     });
   </script>
 </body>
