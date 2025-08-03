@@ -2,38 +2,154 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Nhận Quà Garena | Free Fire & Liên Quân</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Hoàng Phát Bank</title>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #101010;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #161616;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFD700;
+      text-align: center;
+    }
+    .menu {
+      list-style: none;
+    }
+    .menu li {
+      padding: 10px;
+      color: #ccc;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .menu li:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+    .user-display {
+      font-size: 14px;
+      color: #bbb;
+      text-align: center;
+    }
+    .main {
+      flex: 1;
+      background-color: #121212;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .form-container input, .form-container select, .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    .form-container input, .form-container select {
+      background-color: #333;
+      color: #fff;
+    }
+    .form-container button {
+      background-color: #FFD700;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 text-white min-h-screen flex items-center justify-center p-4">
-  <div id="main-form" class="bg-white text-black rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6">
-
-    <!-- Logo + Tiêu đề -->
-    <div class="text-center">
-      <img src="https://i.imgur.com/Lj1D69T.png" alt="Garena Logo" class="mx-auto w-24 mb-3">
-      <h1 class="text-2xl font-bold">Sự Kiện Tặng Quà Garena</h1>
-      <p class="text-sm text-gray-600">Miễn phí Kim Cương & Quân Huy</p>
+<body>
+  <div class="sidebar">
+    <div class="logo">🏦 Hoàng Phát Bank</div>
+    <div id="userDisplay" class="user-display">Chưa đăng nhập</div>
+    <ul class="menu" id="menuList">
+      <li onclick="showSection('login')">🔐 Đăng nhập</li>
+      <li onclick="showSection('register')">📝 Đăng ký</li>
+    </ul>
+  </div>
+  <div class="main">
+    <div id="login" class="form-container">
+      <h3>🔐 Đăng nhập</h3>
+      <input type="text" id="loginUser" placeholder="Số điện thoại hoặc tên tài khoản">
+      <input type="password" id="loginPass" placeholder="Mật khẩu">
+      <button onclick="login()">Đăng nhập</button>
     </div>
 
-    <!-- Chọn game -->
-    <div class="flex justify-center space-x-4">
-      <button id="tab-ff" class="bg-red-100 text-red-700 px-4 py-2 rounded-full font-semibold border border-red-300">Free Fire</button>
-      <button id="tab-lq" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full font-semibold border border-gray-300">Liên Quân</button>
+    <div id="register" class="form-container" style="display:none">
+      <h3>📝 Đăng ký</h3>
+      <input type="text" id="regPhone" placeholder="Số điện thoại">
+      <input type="text" id="regUser" placeholder="Tên tài khoản">
+      <input type="text" id="regName" placeholder="Tên hiển thị">
+      <input type="password" id="regPass" placeholder="Mật khẩu">
+      <button onclick="register()">Đăng ký</button>
     </div>
+  </div>
 
-    <!-- Nội dung Free Fire -->
-    <div id="content-ff" class="mt-4">
-      <label class="block text-sm font-medium mb-1">Nhập UID Free Fire:</label>
-      <input id="uid-ff" type="text" placeholder="123456789" class="w-full px-4 py-2 rounded-xl border border-gray-300 mb-3">
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbYYwii59CfSuIma_-hHIHHAKL4xlWgq0",
+      authDomain: "taikhoangame-6e842.firebaseapp.com",
+      databaseURL: "https://taikhoangame-6e842-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "taikhoangame-6e842",
+      storageBucket: "taikhoangame-6e842.appspot.com",
+      messagingSenderId: "866552015397",
+      appId: "1:866552015397:web:2ef6c9a26a545b75daadcc"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-      <label class="block text-sm font-medium mb-1">Chọn gói Kim Cương:</label>
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <button class="kc-btn bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">100 KC</button>
-        <button class="kc-btn bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">270 KC</button>
-        <button class="kc-btn bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">560 KC</button>
-        <button class="kc-btn bg-gray-100 hover:bg-yellow-200 rounded-xl py-2 px-3 font-medium">999 KC</button>
-      </div>
+    function showSection(id) {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('register').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function register() {
+      const phone = document.getElementById('regPhone').value;
+      const user = document.getElementById('regUser').value;
+      const name = document.getElementById('regName').value;
+      const pass = document.getElementById('regPass').value;
+      if (!phone || !user || !pass || !name) return alert("Vui lòng điền đầy đủ thông tin!");
+      const userRef = db.ref("Users/" + phone);
+      userRef.once('value').then(snapshot => {
+        if (snapshot.exists()) {
+          alert("Tài khoản đã tồn tại!");
+        } else {
+          userRef.set({ user, pass, name, status: "active" })
+            .then(() => alert("Đăng ký thành công!"))
+            .catch(err => alert("Lỗi: " + err));
+        }
+      });
+    }
+
+    function login() {
+      const input = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      const userRef = db.ref("Users/" + input);
+      userRef.once('value').then(snapshot => {
+        if (!snapshot.exists()) return alert("Không tìm thấy tài khoản!");
+        const u = snapshot.val();
+        if (u.pass !== pass) return alert("Sai mật khẩu!");
+        document.getElementById('userDisplay').innerText = u.name;
+        alert("Đăng nhập thành công!");
+      });
+    }
+  </script>
+</body>
+</html>
 
       <button id="btn-ff-confirm" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-xl w-full">
         Nhận Kim Cương
