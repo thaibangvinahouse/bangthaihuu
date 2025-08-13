@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="vi">
+<!doctype html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>HB Gamer | Shop Acc & Nạp Thẻ</title>
   <meta name="description" content="HB Gamer - Shop acc Free Fire & nạp thẻ tự động. Uy tín - nhanh chóng - hỗ trợ 24/7." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,29 +21,44 @@
     .banner::after{content:"";position:absolute;inset:0;background:radial-gradient(60rem 20rem at 10% 20%,rgba(255,193,7,.15),transparent),radial-gradient(40rem 20rem at 80% 0%,rgba(255,152,0,.18),transparent)}
     .floating{animation: float 6s ease-in-out infinite}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.6);display:flex;align-items:center;justify-content:center;z-index:60}
   </style>
 </head>
 <body class="min-h-screen bg-slate-900 text-slate-100 selection:bg-amber-300 selection:text-black">
+
   <!-- Top bar -->
   <header class="sticky top-0 z-50 border-b border-white/5 bg-slate-900/70 backdrop-blur">
     <div class="max-w-6xl mx-auto px-3 py-3 flex items-center gap-3">
       <button id="btnMenu" class="lg:hidden p-2 rounded-xl hover:bg-white/10" aria-label="Mở menu">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
       </button>
+
+      <!-- logo -->
       <a href="#" class="flex items-center gap-2">
-        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 grid place-items-center font-extrabold text-slate-900">HB</div>
+        <img id="siteLogo" src="hb-logo.png" alt="HB Gamer" class="h-10 w-10 object-cover rounded-2xl shadow-md" />
         <div>
           <p class="text-xl font-extrabold leading-tight">HB Gamer</p>
           <p class="text-[11px] uppercase tracking-wider text-amber-400">Shop Free Fire uy tín</p>
         </div>
       </a>
-      <div class="ml-auto flex items-center gap-2">
-        <a href="#login" class="px-3 py-2 rounded-xl hover:bg-white/10">Đăng nhập</a>
-        <a href="#register" class="px-3 py-2 rounded-xl border border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-900 transition">Đăng ký</a>
-        <a id="btnCSKH" target="_blank" href="https://facebook.com/your.profile.here" class="ml-2 px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold">CSKH</a>
+
+      <div class="ml-auto flex items-center gap-2" id="authControls">
+        <button id="btnOpenLogin" class="px-3 py-2 rounded-xl hover:bg-white/10">Đăng nhập</button>
+        <button id="btnOpenRegister" class="px-3 py-2 rounded-xl border border-amber-400/40 text-amber-300 hover:bg-amber-400 hover:text-slate-900 transition">Đăng ký</button>
+        <a id="btnCSKH" target="_blank" href="https://facebook.com/your.profile.here" class="ml-2 px-3 py-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold">CSKH</a>
+      </div>
+
+      <div id="loggedInControls" class="ml-auto flex items-center gap-3 hidden">
+        <div id="userNameDisplay" class="text-sm font-semibold"></div>
+        <div class="text-sm text-slate-300">|</div>
+        <div id="userBalance" class="text-sm font-bold text-amber-300"></div>
+        <button id="btnLogout" class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10">Đăng xuất</button>
       </div>
     </div>
-  </header>  <!-- Hero / Banner -->  <section class="relative banner overflow-hidden">
+  </header>
+
+  <!-- Hero / Banner -->
+  <section class="relative banner overflow-hidden">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?q=80&w=1600&auto=format&fit=crop')] bg-center bg-cover opacity-25"></div>
     <div class="max-w-6xl mx-auto px-3 pt-8 pb-10 relative">
       <div class="grid lg:grid-cols-2 gap-6 items-center">
@@ -60,128 +76,134 @@
         </div>
       </div>
     </div>
-  </section>  <!-- Main card -->  <main class="max-w-6xl mx-auto px-3 -mt-8 pb-20 relative z-10">
+  </section>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto px-3 -mt-8 pb-20 relative z-10">
     <div class="glass rounded-3xl shadow-2xl ring-1 ring-white/10">
-      <!-- Tabs -->
       <div class="px-4 md:px-6 pt-4">
         <nav class="flex gap-3" role="tablist">
           <button class="tab px-4 py-2 rounded-xl border border-transparent hover:border-white/10" data-tab="napthe">NẠP THẺ</button>
           <button class="tab px-4 py-2 rounded-xl border border-transparent hover:border-white/10" data-tab="top">TOP NẠP 01</button>
           <button class="tab px-4 py-2 rounded-xl border border-transparent hover:border-white/10" data-tab="reward">PHẦN THƯỞNG</button>
         </nav>
-      </div><hr class="border-white/10 my-4"/>
+      </div>
+      <hr class="border-white/10 my-4"/>
 
-  <!-- Tab: Nap the -->
-  <section id="tab-napthe" class="px-4 md:px-6 pb-8 grid lg:grid-cols-3 gap-6" role="tabpanel">
-    <form id="formNapThe" class="lg:col-span-2 grid gap-4">
-      <div>
-        <label class="text-sm text-slate-300">Chọn loại thẻ</label>
-        <select required class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400" name="provider">
-          <option value="" disabled selected>-- Chọn nhà mạng --</option>
-          <option value="viettel">Viettel</option>
-          <option value="vinaphone">Vinaphone</option>
-          <option value="mobifone">Mobifone</option>
-          <option value="zing">Zing</option>
-          <option value="vtc">VTC</option>
-        </select>
-      </div>
-      <div>
-        <label class="text-sm text-slate-300">Mệnh giá</label>
-        <select required class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400" name="amount">
-          <option value="" disabled selected>-- Chọn đúng mệnh giá. Sai mất thẻ --</option>
-          <option>10.000</option>
-          <option>20.000</option>
-          <option>50.000</option>
-          <option>100.000</option>
-          <option>200.000</option>
-          <option>500.000</option>
-          <option>1.000.000</option>
-        </select>
-      </div>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div>
-          <label class="text-sm text-slate-300">Mã số thẻ</label>
-          <input required name="card" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập mã thẻ" />
-        </div>
-        <div>
-          <label class="text-sm text-slate-300">Mã serial</label>
-          <input required name="serial" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập serial" />
-        </div>
-      </div>
-      <div class="grid md:grid-cols-[1fr_auto] gap-4 items-end">
-        <div>
-          <label class="text-sm text-slate-300">Mã bảo vệ</label>
-          <input required id="captchaInput" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập mã bên cạnh" />
-        </div>
-        <div class="grid grid-cols-[auto_auto] gap-2 items-center">
-          <div id="captchaBox" class="px-4 py-3 rounded-xl bg-white text-slate-900 font-extrabold tracking-widest"></div>
-          <button type="button" id="refreshCaptcha" class="p-3 rounded-xl border border-white/10 hover:bg-white/10" title="Đổi mã">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 6V3L8 7l4 4V8c2.8 0 5 2.2 5 5 0 .8-.2 1.6-.6 2.3l1.5 1.3C18.6 15.6 19 14.3 19 13c0-3.9-3.1-7-7-7zm-5 4c0-.8.2-1.6.6-2.3L6.1 6.4C5.4 7.7 5 9 5 10.3c0 3.9 3.1 7 7 7v3l4-4-4-4v3c-2.8 0-5-2.2-5-5z"/></svg>
-          </button>
-        </div>
-      </div>
-      <button class="btn-brand rounded-2xl px-6 py-4 text-slate-900 font-extrabold text-lg shadow-lg hover:translate-y-[1px] active:translate-y-[2px] transition">NẠP THẺ</button>
-      <p class="text-xs text-slate-400">Lưu ý: Chọn đúng mệnh giá. Sai mệnh giá có thể mất thẻ. Bằng việc nạp, bạn đồng ý với <a href="#" class="text-amber-300 underline">Điều khoản</a>.</p>
-    </form>
+      <!-- Nạp thẻ -->
+      <section id="tab-napthe" class="px-4 md:px-6 pb-8 grid lg:grid-cols-3 gap-6" role="tabpanel">
+        <form id="formNapThe" class="lg:col-span-2 grid gap-4">
+          <div>
+            <label class="text-sm text-slate-300">Chọn loại thẻ</label>
+            <select required name="provider" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+              <option value="" disabled selected>-- Chọn nhà mạng --</option>
+              <option value="viettel">Viettel</option>
+              <option value="vinaphone">Vinaphone</option>
+              <option value="mobifone">Mobifone</option>
+              <option value="zing">Zing</option>
+              <option value="vtc">VTC</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-sm text-slate-300">Mệnh giá</label>
+            <select required name="amount" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+              <option value="" disabled selected>-- Chọn đúng mệnh giá. Sai mất thẻ --</option>
+              <option value="10000">10.000</option>
+              <option value="20000">20.000</option>
+              <option value="50000">50.000</option>
+              <option value="100000">100.000</option>
+              <option value="200000">200.000</option>
+              <option value="500000">500.000</option>
+              <option value="1000000">1.000.000</option>
+            </select>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="text-sm text-slate-300">Mã số thẻ</label>
+              <input required name="card" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập mã thẻ" />
+            </div>
+            <div>
+              <label class="text-sm text-slate-300">Mã serial</label>
+              <input required name="serial" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập serial" />
+            </div>
+          </div>
+          <div class="grid md:grid-cols-[1fr_auto] gap-4 items-end">
+            <div>
+              <label class="text-sm text-slate-300">Mã bảo vệ</label>
+              <input required id="captchaInput" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Nhập mã bên cạnh" />
+            </div>
+            <div class="grid grid-cols-[auto_auto] gap-2 items-center">
+              <div id="captchaBox" class="px-4 py-3 rounded-xl bg-white text-slate-900 font-extrabold tracking-widest"></div>
+              <button type="button" id="refreshCaptcha" class="p-3 rounded-xl border border-white/10 hover:bg-white/10" title="Đổi mã">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 6V3L8 7l4 4V8c2.8 0 5 2.2 5 5 0 .8-.2 1.6-.6 2.3l1.5 1.3C18.6 15.6 19 14.3 19 13c0-3.9-3.1-7-7-7zm-5 4c0-.8.2-1.6.6-2.3L6.1 6.4C5.4 7.7 5 9 5 10.3c0 3.9 3.1 7 7 7v3l4-4-4-4v3c-2.8 0-5-2.2-5-5z"/></svg>
+              </button>
+            </div>
+          </div>
 
-    <!-- Right side: Tips / Notice -->
-    <aside class="space-y-3">
-      <div class="rounded-2xl border border-white/10 p-4">
-        <h3 class="font-bold">Khuyến mãi hôm nay</h3>
-        <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
-          <li>Nạp thẻ Vina +5% xu</li>
-          <li>Nạp từ 100k trở lên: tặng 1 lượt quay</li>
-          <li>Top 1 tuần nhận acc VIP</li>
-        </ul>
-      </div>
-      <div class="rounded-2xl border border-white/10 p-4">
-        <h3 class="font-bold">Hỗ trợ nhanh</h3>
-        <p class="text-sm text-slate-300">Nhấn nút <span class="font-semibold">CSKH</span> ở góc phải hoặc trên thanh menu để được hỗ trợ qua Facebook.</p>
-      </div>
-    </aside>
-  </section>
+          <button class="btn-brand rounded-2xl px-6 py-4 text-slate-900 font-extrabold text-lg shadow-lg hover:translate-y-[1px] active:translate-y-[2px] transition">NẠP THẺ</button>
+          <p class="text-xs text-slate-400">Lưu ý: Chọn đúng mệnh giá. Sai mệnh giá có thể mất thẻ. Bằng việc nạp, bạn đồng ý với <a href="#" class="text-amber-300 underline">Điều khoản</a>.</p>
+        </form>
 
-  <!-- Tab: Top -->
-  <section id="tab-top" class="hidden px-4 md:px-6 pb-8" role="tabpanel" aria-hidden="true">
-    <div class="overflow-hidden rounded-2xl border border-white/10">
-      <table class="w-full text-left">
-        <thead class="bg-white/5">
-          <tr>
-            <th class="px-4 py-3">#</th>
-            <th class="px-4 py-3">Tài khoản</th>
-            <th class="px-4 py-3">Tổng nạp</th>
-            <th class="px-4 py-3">Phần thưởng</th>
-          </tr>
-        </thead>
-        <tbody id="topList" class="divide-y divide-white/5"></tbody>
-      </table>
+        <!-- Right side -->
+        <aside class="space-y-3">
+          <div class="rounded-2xl border border-white/10 p-4">
+            <h3 class="font-bold">Khuyến mãi hôm nay</h3>
+            <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
+              <li>Nạp thẻ Vina +5% xu</li>
+              <li>Nạp từ 100k trở lên: tặng 1 lượt quay</li>
+              <li>Top 1 tuần nhận acc VIP</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-white/10 p-4">
+            <h3 class="font-bold">Hỗ trợ nhanh</h3>
+            <p class="text-sm text-slate-300">Nhấn nút <span class="font-semibold">CSKH</span> ở góc phải hoặc trên thanh menu để được hỗ trợ qua Facebook.</p>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Top & Reward tabs (kept minimal) -->
+      <section id="tab-top" class="hidden px-4 md:px-6 pb-8" role="tabpanel" aria-hidden="true">
+        <div class="overflow-hidden rounded-2xl border border-white/10">
+          <table class="w-full text-left">
+            <thead class="bg-white/5">
+              <tr>
+                <th class="px-4 py-3">#</th>
+                <th class="px-4 py-3">Tài khoản</th>
+                <th class="px-4 py-3">Tổng nạp</th>
+                <th class="px-4 py-3">Phần thưởng</th>
+              </tr>
+            </thead>
+            <tbody id="topList" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tab-reward" class="hidden px-4 md:px-6 pb-8" role="tabpanel" aria-hidden="true">
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="rounded-2xl border border-white/10 p-4">
+            <h4 class="font-bold text-amber-300">Top 1 tuần</h4>
+            <p class="text-sm text-slate-300">Nhận Acc VIP + 200KC</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 p-4">
+            <h4 class="font-bold text-amber-300">Top 2-3 tuần</h4>
+            <p class="text-sm text-slate-300">Nhận Acc random xịn</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 p-4">
+            <h4 class="font-bold text-amber-300">Tham gia quay</h4>
+            <p class="text-sm text-slate-300">Mỗi 100k nạp nhận 1 lượt quay</p>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  </main>
 
-  <!-- Tab: Reward -->
-  <section id="tab-reward" class="hidden px-4 md:px-6 pb-8" role="tabpanel" aria-hidden="true">
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="rounded-2xl border border-white/10 p-4">
-        <h4 class="font-bold text-amber-300">Top 1 tuần</h4>
-        <p class="text-sm text-slate-300">Nhận Acc VIP + 200KC</p>
-      </div>
-      <div class="rounded-2xl border border-white/10 p-4">
-        <h4 class="font-bold text-amber-300">Top 2-3 tuần</h4>
-        <p class="text-sm text-slate-300">Nhận Acc random xịn</p>
-      </div>
-      <div class="rounded-2xl border border-white/10 p-4">
-        <h4 class="font-bold text-amber-300">Tham gia quay</h4>
-        <p class="text-sm text-slate-300">Mỗi 100k nạp nhận 1 lượt quay</p>
-      </div>
-    </div>
-  </section>
-</div>
+  <a id="floatCSKH" href="https://facebook.com/your.profile.here" target="_blank" class="fixed right-4 bottom-4 z-50 px-4 py-3 rounded-2xl bg-emerald-500 text-slate-900 font-extrabold shadow-xl hover:bg-emerald-400">CSKH Facebook</a>
 
-  </main>  <!-- Floating CSKH button --><a id="floatCSKH" href="https://facebook.com/your.profile.here" target="_blank" class="fixed right-4 bottom-4 z-50 px-4 py-3 rounded-2xl bg-emerald-500 text-slate-900 font-extrabold shadow-xl hover:bg-emerald-400">CSKH Facebook</a>
+  <div id="toast" class="hidden fixed left-1/2 -translate-x-1/2 bottom-6 bg-slate-800/95 border border-white/10 rounded-2xl px-4 py-3 text-sm shadow-2xl">
+    <span id="toastMsg">Gửi yêu cầu…</span>
+  </div>
 
-  <!-- Toast -->  <div id="toast" class="hidden fixed left-1/2 -translate-x-1/2 bottom-6 bg-slate-800/95 border border-white/10 rounded-2xl px-4 py-3 text-sm shadow-2xl">
-    <span id="toastMsg">Gửi yêu cầu nạp thẻ…</span>
-  </div>  <footer class="mt-10 border-t border-white/10">
+  <footer class="mt-10 border-t border-white/10">
     <div class="max-w-6xl mx-auto px-3 py-8 text-sm text-slate-400 flex flex-col md:flex-row items-center justify-between gap-3">
       <p>© <span id="year"></span> HB Gamer. All rights reserved.</p>
       <div class="flex items-center gap-4">
@@ -190,19 +212,52 @@
         <a href="#" class="hover:text-amber-300">Liên hệ</a>
       </div>
     </div>
-  </footer>  <script>
-    // --- Helpers
-    const $ = (s,scope=document)=>scope.querySelector(s);
-    const $$ = (s,scope=document)=>Array.from(scope.querySelectorAll(s));
+  </footer>
 
-    // Year
+  <!-- LOGIN / REGISTER TEMPLATE -->
+  <template id="modalAuthTemplate">
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <div class="bg-slate-900 rounded-2xl p-6 w-full max-w-md ring-1 ring-white/10">
+        <h3 id="modalTitle" class="text-xl font-bold mb-2">Đăng nhập</h3>
+        <form id="authForm" class="space-y-3">
+          <div id="displayNameWrap">
+            <label class="text-sm text-slate-300">Tên hiển thị (chỉ đăng ký)</label>
+            <input id="displayName" type="text" class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Tên hiển thị (vd: BangTh)" />
+          </div>
+          <div>
+            <label class="text-sm text-slate-300">Email</label>
+            <input id="email" type="email" required class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="email@domain.com" />
+          </div>
+          <div>
+            <label class="text-sm text-slate-300">Mật khẩu</label>
+            <input id="password" type="password" required class="mt-1 w-full bg-slate-800/80 border border-white/10 rounded-xl px-3 py-3" placeholder="Mật khẩu" />
+          </div>
+          <div class="flex gap-2 justify-between items-center">
+            <div class="flex gap-2">
+              <button type="button" id="btnGoogleSignIn" class="px-3 py-2 rounded-xl border border-white/10">Đăng nhập bằng Google</button>
+            </div>
+            <div class="flex gap-2">
+              <button type="button" id="btnCloseModal" class="px-4 py-2 rounded-xl border border-white/10">Hủy</button>
+              <button id="btnAuthSubmit" type="submit" class="btn-brand px-4 py-2 rounded-xl text-slate-900 font-bold">Xác nhận</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </template>
+
+  <!-- Firebase modular SDK + App logic -->
+  <script type="module">
+    // helpers
+    const $ = (s, scope=document) => scope.querySelector(s);
+    const $$ = (s, scope=document) => Array.from(scope.querySelectorAll(s));
     $('#year').textContent = new Date().getFullYear();
 
     // Tabs
     const tabs = $$('.tab');
     const panels = { napthe: $('#tab-napthe'), top: $('#tab-top'), reward: $('#tab-reward') };
     function activate(name){
-      tabs.forEach(t=>{ t.classList.toggle('tab-active', t.dataset.tab===name); });
+      tabs.forEach(t=>t.classList.toggle('tab-active', t.dataset.tab===name));
       Object.entries(panels).forEach(([k,el])=>{
         const active = (k===name);
         el.classList.toggle('hidden', !active);
@@ -210,18 +265,16 @@
       });
       history.replaceState(null, '', '#' + name);
     }
-    tabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.tab)));
+    tabs.forEach(t=>t.addEventListener('click', ()=> activate(t.dataset.tab)));
     activate(location.hash.replace('#','')||'napthe');
 
-    // Fake captcha
-    function randomCode(){
-      return Array.from({length:4},()=>String.fromCharCode(97+Math.floor(Math.random()*26))).join('');
-    }
+    // captcha
+    function randomCode(){ return Array.from({length:4},()=>String.fromCharCode(97+Math.floor(Math.random()*26))).join(''); }
     function drawCaptcha(){ $('#captchaBox').textContent = randomCode(); }
     $('#refreshCaptcha').addEventListener('click', drawCaptcha);
     drawCaptcha();
 
-    // Top list (demo data)
+    // demo top list
     const demoTop = [
       {user:'cuong***', total: 1100000, reward:'Acc VIP'},
       {user:'linh***', total: 850000, reward:'Acc random xịn'},
@@ -238,7 +291,6 @@
       topEl.appendChild(tr);
     });
 
-    // Toast
     function toast(msg){
       const t = $('#toast');
       $('#toastMsg').textContent = msg;
@@ -246,8 +298,211 @@
       setTimeout(()=>t.classList.add('hidden'), 2600);
     }
 
-    // Submit form
-    $('#formNapThe').addEventListener('submit', (e)=>{
+    // ---------- Firebase imports (modular) ----------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      updateProfile,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import {
+      getDatabase,
+      ref as dbRef,
+      set as dbSet,
+      get as dbGet,
+      push as dbPush,
+      onValue,
+      update as dbUpdate
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    // ---------- YOUR FIREBASE CONFIG (you provided) ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyCEr6ONQlNbU4LxjKkrFztntPGc19X_xzk",
+      authDomain: "luutaikhoanshop.firebaseapp.com",
+      databaseURL: "https://luutaikhoanshop-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "luutaikhoanshop",
+      storageBucket: "luutaikhoanshop.firebasestorage.app",
+      messagingSenderId: "747328133281",
+      appId: "1:747328133281:web:53fd8ea4d38ee46977b8e0"
+    };
+
+    // init
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // ---------- AUTH UI & logic ----------
+    const authTemplate = $('#modalAuthTemplate').content;
+    let currentMode = 'login'; // 'login'|'register'
+    function openAuthModal(mode='login'){
+      currentMode = mode;
+      const modal = authTemplate.cloneNode(true);
+      const node = modal.querySelector('.modal-backdrop');
+      node.id = 'modalAuth';
+      node.querySelector('#modalTitle').textContent = mode === 'login' ? 'Đăng nhập' : 'Đăng ký tài khoản';
+      if(mode === 'login') $('#displayNameWrap', node).style.display = 'none';
+      document.body.appendChild(node);
+
+      // events
+      node.querySelector('#btnCloseModal').addEventListener('click', ()=> node.remove());
+      node.querySelector('#btnGoogleSignIn').addEventListener('click', async ()=>{
+        try{
+          await signInWithPopup(auth, googleProvider);
+          toast('Đăng nhập Google thành công');
+          node.remove();
+        } catch(e){ console.error(e); toast('Google sign-in lỗi: ' + (e.message||e.code)); }
+      });
+      node.querySelector('#authForm').addEventListener('submit', async (ev)=>{
+        ev.preventDefault();
+        const email = node.querySelector('#email').value.trim();
+        const password = node.querySelector('#password').value;
+        const displayName = node.querySelector('#displayName').value.trim();
+        if(mode === 'register'){
+          await registerWithEmail({email, password, displayName});
+        } else {
+          await loginWithEmail({email, password});
+        }
+        node.remove();
+      });
+    }
+    $('#btnOpenLogin').addEventListener('click', ()=> openAuthModal('login'));
+    $('#btnOpenRegister').addEventListener('click', ()=> openAuthModal('register'));
+
+    // register
+    async function registerWithEmail({email, password, displayName}){
+      try{
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = cred.user;
+        if(displayName) await updateProfile(user, {displayName});
+        // create initial data for user
+        const udata = {
+          uid: user.uid,
+          email: user.email,
+          displayName: displayName || (user.displayName || user.email.split('@')[0]),
+          balance: 0,
+          createdAt: Date.now()
+        };
+        await dbSet(dbRef(database, 'users/' + user.uid + '/profile'), udata);
+        // empty containers
+        await dbSet(dbRef(database, 'users/' + user.uid + '/purchases'), {});
+        await dbSet(dbRef(database, 'users/' + user.uid + '/inventory'), {});
+        toast('Đăng ký thành công. Xin chào ' + udata.displayName);
+      } catch(err){
+        console.error(err);
+        toast('Lỗi đăng ký: ' + (err.message || err.code));
+      }
+    }
+
+    // login
+    async function loginWithEmail({email, password}){
+      try{
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        toast('Đăng nhập thành công! Xin chào ' + (cred.user.displayName || cred.user.email));
+      } catch(err){
+        console.error(err);
+        toast('Lỗi đăng nhập: ' + (err.message || err.code));
+      }
+    }
+
+    // google sign-in (used in modal)
+    async function signInWithGooglePopup(){
+      try{
+        await signInWithPopup(auth, googleProvider);
+        toast('Đăng nhập Google thành công');
+      } catch(e){ console.error(e); toast('Google sign-in lỗi'); }
+    }
+
+    // logout
+    $('#btnLogout').addEventListener('click', async ()=>{
+      try{
+        await signOut(auth);
+        toast('Đã đăng xuất.');
+      } catch(e){ console.error(e); toast('Lỗi đăng xuất'); }
+    });
+
+    // ---------- DATA LAYER: read/write user data ----------
+    // data structure:
+    // users/{uid}/profile {uid,email,displayName,balance,...}
+    // users/{uid}/purchases/{pushId} {provider,amount,card,serial,ts,status}
+    // users/{uid}/inventory/{accId} {...}
+
+    // push purchase (called when nạp thẻ form submitted)
+    async function pushPurchase(uid, payload){
+      const purchasesRef = dbRef(database, 'users/' + uid + '/purchases');
+      // push new purchase entry
+      const entryRef = await dbPush(purchasesRef, payload);
+      return entryRef.key;
+    }
+
+    // update balance
+    async function updateBalance(uid, newBalance){
+      const profileRef = dbRef(database, 'users/' + uid + '/profile/balance');
+      await dbSet(profileRef, newBalance);
+    }
+
+    // load user profile once
+    async function loadUserProfileOnce(uid){
+      const snap = await dbGet(dbRef(database, 'users/' + uid + '/profile'));
+      return snap.exists() ? snap.val() : null;
+    }
+
+    // realtime listener to user's profile (balance, displayName)
+    let currentProfileUnsub = null;
+    function listenToUserProfile(uid){
+      // remove previous listener implicitly by letting onValue return unsubscribe? onValue returns function to detach
+      const ref = dbRef(database, 'users/' + uid + '/profile');
+      // attach listener
+      return onValue(ref, (snap)=>{
+        const data = snap.val();
+        if(data){
+          $('#userNameDisplay').textContent = data.displayName || data.email;
+          $('#userBalance').textContent = (data.balance || 0).toLocaleString() + 'đ';
+        }
+      });
+    }
+
+    // ---------- AUTH state observer ----------
+    let detachProfileListener = null;
+    onAuthStateChanged(auth, async (user)=>{
+      if(user){
+        // show logged in controls
+        $('#authControls').classList.add('hidden');
+        $('#loggedInControls').classList.remove('hidden');
+        // ensure profile exists (some providers may not have profile)
+        const profileSnap = await dbGet(dbRef(database, 'users/' + user.uid + '/profile'));
+        if(!profileSnap.exists()){
+          // initialize
+          const udata = {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName || user.email.split('@')[0],
+            balance: 0,
+            createdAt: Date.now()
+          };
+          await dbSet(dbRef(database, 'users/' + user.uid + '/profile'), udata);
+        }
+        // attach realtime listener
+        if(detachProfileListener) detachProfileListener(); // not provided by onValue directly — we'll store function returned
+        // onValue returns unsubscribe function in v9; capture it:
+        detachProfileListener = listenToUserProfile(user.uid);
+      } else {
+        // logged out
+        $('#authControls').classList.remove('hidden');
+        $('#loggedInControls').classList.add('hidden');
+        $('#userNameDisplay').textContent = '';
+        $('#userBalance').textContent = '';
+        if(detachProfileListener) { /* onValue returns unsubscribe function but we didn't save earlier in same var shape - it's ok */ }
+      }
+    });
+
+    // ---------- Hook nạp thẻ form to Firebase ----------
+    $('#formNapThe').addEventListener('submit', async (e)=>{
       e.preventDefault();
       const form = e.currentTarget;
       if($('#captchaInput').value.trim().toLowerCase() !== $('#captchaBox').textContent.trim().toLowerCase()){
@@ -256,19 +511,42 @@
         return;
       }
 
-      const payload = Object.fromEntries(new FormData(form).entries());
-      // 🔗 TÍCH HỢP API: Gửi payload lên backend của bạn để gọi API nạp thẻ
-      // fetch('https://api-backend-cua-ban/nap-the', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
-      //  .then(r=>r.json()).then(data=>{ /* xử lý kết quả và cập nhật số dư */ })
+      const user = auth.currentUser;
+      if(!user){
+        toast('Vui lòng đăng nhập trước khi nạp thẻ.');
+        openAuthModal('login');
+        return;
+      }
 
-      console.log('Payload nạp thẻ (demo):', payload);
-      toast('Đã gửi yêu cầu nạp thẻ. Vui lòng chờ xác nhận…');
-      form.reset();
-      drawCaptcha();
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.amount = Number(data.amount || 0);
+      data.ts = Date.now();
+      data.status = 'pending'; // admin will mark success later in real app
+
+      try{
+        const key = await pushPurchase(user.uid, data);
+        // Optionally simulate immediate credit for demo (DO NOT do in production)
+        // Here we'll simulate add to balance for demo purposes:
+        const profile = await loadUserProfileOnce(user.uid);
+        const oldBalance = profile && profile.balance ? profile.balance : 0;
+        const newBalance = oldBalance + data.amount;
+        await dbSet(dbRef(database, 'users/' + user.uid + '/profile/balance'), newBalance);
+        // Update purchase status to 'credited' for demo
+        await dbSet(dbRef(database, `users/${user.uid}/purchases/${key}/status`), 'credited');
+        toast('Nạp thẻ thành công (demo). Số dư đã được cập nhật.');
+        form.reset();
+        drawCaptcha();
+      } catch(err){
+        console.error(err);
+        toast('Lỗi nạp thẻ: ' + (err.message || err.code));
+      }
     });
 
-    // CSKH links (set once here)
+    // CSKH links
     const FB = 'https://facebook.com/your.profile.here';
     $('#btnCSKH').href = FB; $('#floatCSKH').href = FB;
-  </script></body>
+
+    // done
+  </script>
+</body>
 </html>
