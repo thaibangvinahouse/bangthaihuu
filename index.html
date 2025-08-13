@@ -478,13 +478,15 @@
         const profileSnap = await dbGet(dbRef(database, 'users/' + user.uid + '/profile'));
         if(!profileSnap.exists()){
           // initialize
-          const udata = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName || user.email.split('@')[0],
-            balance: 0,
-            createdAt: Date.now()
-          };
+         const udata = {
+  uid: user.uid,
+  email: user.email,
+  displayName: displayName || (user.displayName || user.email.split('@')[0]),
+  balance: 0,     // VNĐ
+  kcBalance: 0,   // Kim Cương
+  createdAt: Date.now()
+};
+
           await dbSet(dbRef(database, 'users/' + user.uid + '/profile'), udata);
         }
         // attach realtime listener
@@ -547,6 +549,132 @@
     $('#btnCSKH').href = FB; $('#floatCSKH').href = FB;
 
     // done
+    <script>
+  // === Thêm tab nút vòng quay vào thanh menu tab ===
+  const spinTabBtn = document.createElement('button');
+  spinTabBtn.className = "tab px-4 py-2 rounded-xl border border-transparent hover:border-white/10";
+  spinTabBtn.dataset.tab = "spinff";
+  spinTabBtn.textContent = "VÒNG QUAY FF";
+  document.querySelector('nav.flex.gap-3').appendChild(spinTabBtn);
+
+  // === Nội dung tab vòng quay ===
+  const spinTab = document.createElement('section');
+  spinTab.id = "tab-spinff";
+  spinTab.className = "hidden px-4 md:px-6 pb-8";
+  spinTab.setAttribute("role", "tabpanel");
+  spinTab.innerHTML = `
+    <div class="grid gap-6">
+      <div class="rounded-2xl border border-white/10 p-4">
+        <h3 class="font-bold text-lg text-amber-300">VÒNG QUAY KIM CƯƠNG FREE FIRE</h3>
+        <p class="text-slate-300 text-sm">Chọn mức quay và thử vận may nhận tới <b>9999 KC</b>!</p>
+        <div class="mt-3 flex flex-wrap gap-3" id="spinOptions">
+          <button data-price="9000" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-900 font-bold hover:bg-amber-400">Quay 9K</button>
+          <button data-price="19000" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-900 font-bold hover:bg-amber-400">Quay 19K</button>
+          <button data-price="49000" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-900 font-bold hover:bg-amber-400">Quay 49K</button>
+        </div>
+        <div id="spinResult" class="mt-4 text-center text-lg font-bold text-emerald-400"></div>
+      </div>
+      <div class="rounded-2xl border border-white/10 p-4">
+        <h4 class="font-bold text-amber-300">Lịch sử quay</h4>
+        <ul id="spinHistory" class="mt-2 text-sm text-slate-300 space-y-1"></ul>
+      </div>
+    </div>
+  `;
+  document.querySelector('.glass').appendChild(spinTab);
+
+  // === Danh sách giải thưởng KC ===
+  const prizes = [9, 18, 50, 100, 500, 9999];
+  const prizeWeights = { // tổng ~1000
+    9: 450,
+    18: 450,
+    50: 40,
+    100: 30,
+    500: 29,
+    9999: 1
+  };
+
+  function weightedRandom() {
+    const total = Object.values(prizeWeights).reduce((a,b)=>a+b,0);
+    let r = Math.floor(Math.random() * total);
+    for (const p of prizes) {
+      r -= prizeWeights[p];
+      if (r < 0) return p;
+    }
+    return 9;
+  }
+
+  async function spin(price) {
+    const user = auth.currentUser;
+    if (!user) {
+      toast("Vui lòng đăng nhập trước khi quay.");
+      openAuthModal("login");
+      return;
+    }
+    const profile = await loadUserProfileOnce(user.uid);
+    const oldBal = profile.balance || 0;
+    if (oldBal < price) {
+      toast("Số dư không đủ để quay.");
+      return;
+    }
+
+    // Trừ VNĐ khi quay
+    await updateBalance(user.uid, oldBal - price);
+
+    // Random kết quả KC
+    const kcWon = weightedRandom();
+
+    // Cộng vào kcBalance
+    const kcBalRef = dbRef(database, 'users/' + user.uid + '/profile/kcBalance');
+    const kcSnap = await dbGet(kcBalRef);
+    const oldKC = kcSnap.exists() ? kcSnap.val() : 0;
+    await dbSet(kcBalRef, oldKC + kcWon);
+
+    // Lưu lịch sử quay
+    const histRef = dbRef(database, 'users/' + user.uid + '/spinHistory');
+    await dbPush(histRef, {
+      time: Date.now(),
+      price: price,
+      kc: kcWon
+    });
+
+    // Hiển thị kết quả
+    document.getElementById("spinResult").textContent = `🎉 Bạn nhận được ${kcWon} KC!`;
+    loadSpinHistory();
+  }
+
+  async function loadSpinHistory() {
+    const user = auth.currentUser;
+    if (!user) return;
+    const histRef = dbRef(database, 'users/' + user.uid + '/spinHistory');
+    const snap = await dbGet(histRef);
+    const list = document.getElementById("spinHistory");
+    list.innerHTML = "";
+    if (snap.exists()) {
+      const data = snap.val();
+      const entries = Object.values(data).sort((a,b)=>b.time-a.time).slice(0,10);
+      entries.forEach(e=>{
+        const li = document.createElement("li");
+        const date = new Date(e.time).toLocaleString();
+        li.textContent = `${date} - Quay ${e.price.toLocaleString()}đ → ${e.kc} KC`;
+        list.appendChild(li);
+      });
+    }
+  }
+
+  // Bắt sự kiện bấm quay
+  document.getElementById("spinOptions").addEventListener("click", e=>{
+    if (e.target.tagName === "BUTTON") {
+      const price = Number(e.target.dataset.price);
+      spin(price);
+    }
+  });
+
+  // Khi login thì load lịch sử
+  onAuthStateChanged(auth, (user)=>{
+    if (user) loadSpinHistory();
+  });
+</script>
+
   </script>
 </body>
 </html>
